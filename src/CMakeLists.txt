@@ -1,0 +1,21 @@
+add_subdirectory(boss)
+# add_subdirectory(fps_gl_helpers)
+# add_subdirectory(fps_core)
+# add_subdirectory(fps_core_examples)
+# add_subdirectory(fps_core_viewers)
+# add_subdirectory(fps_tracker)
+# add_subdirectory(fps_tracker_viewers)
+# add_subdirectory(fps_tracker_examples)
+# add_subdirectory(fps_map)
+# add_subdirectory(fps_map_viewers)
+# add_subdirectory(fps_local_mapper)
+# add_subdirectory(fps_local_mapper_viewers)
+# add_subdirectory(fps_local_mapper_examples)
+# add_subdirectory(fps_ros_bridge)
+
+# the one below requires g2o
+# add_subdirectory(fps_global_optimization)
+# add_subdirectory(fps_calibration)
+# add_subdirectory(playground)
+# add_subdirectory(fps_loop_closer)
+

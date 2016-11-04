@@ -26,6 +26,14 @@ set(CMAKE_BUILD_TYPE Release)
 
 ## System dependencies are found with CMake's conventions
 
+# Find OpenMP
+find_package(OpenMP)
+if(OPENMP_FOUND)
+ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} -DEIGEN_DONT_PARALLELIZE")
+ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
+endif(OPENMP_FOUND)
+
 # Find PkgConfig
 # find_package(PkgConfig REQUIRED)
 
@@ -36,19 +44,11 @@ set(CMAKE_BUILD_TYPE Release)
 # Find Boost
 # find_package(Boost COMPONENTS system filesystem REQUIRED)
 
-
 # Find Flann
 # pkg_check_modules(FLANN flann REQUIRED)
 # include(FindPackageHandleStandardArgs)
 # find_package_handle_standard_args(FLANN DEFAULT_MSG FLANN_LIBRARY FLANN_INCLUDE_DIR)
 
-# Find OpenMP
-# find_package(OpenMP)
-# if(OPENMP_FOUND)
-#  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-#  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} -D_POSIT_SOLVER_USE_OPENMP_ -DEIGEN_DONT_PARALLELIZE")
-#  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
-# endif(OPENMP_FOUND)
 
 # Find OpenCV
 # find_package(OpenCV)
@@ -57,9 +57,6 @@ set(CMAKE_BUILD_TYPE Release)
 # Find ZLib
 # find_package(ZLIB REQUIRED)
 # include_directories(${ZLIB_INCLUDE_DIRS})
-
-# Set up the top-level include directories
-# include_directories(${PROJECT_SOURCE_DIR}/src)
 
 # Find OpenGL
 # find_package(OpenGL REQUIRED)
@@ -77,6 +74,7 @@ set(CMAKE_BUILD_TYPE Release)
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
 # catkin_python_setup()
+
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -140,6 +138,7 @@ set(CMAKE_BUILD_TYPE Release)
 #   sensor_msgs
 # )
 
+
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -150,9 +149,10 @@ set(CMAKE_BUILD_TYPE Release)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS src
-  LIBRARIES 
-  # boss_library
+  INCLUDE_DIRS 
+  LIBRARIES
+  src
+  boss_library
   # txt_io_library
   # fps_core_library			
   # fps_tracker_library
@@ -176,6 +176,7 @@ catkin_package(
 #  DEPENDS system_lib
 )
 
+
 ###########
 ## Build ##
 ###########
@@ -184,10 +185,9 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
-  ${voronoi_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
+  ${PROJECT_SOURCE_DIR}/src
 )
-
 
 ## Declare a cpp library
 # add_library(ptracker
@@ -206,7 +206,8 @@ include_directories(
 #   ${catkin_LIBRARIES}
 # )
 
-# ADD_SUBDIRECTORY(${PROJECT_SOURCE_DIR}/src)
+add_subdirectory(${PROJECT_SOURCE_DIR}/src)
+
 
 #############
 ## Install ##
@@ -242,6 +243,7 @@ include_directories(
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
+
 
 #############
 ## Testing ##
