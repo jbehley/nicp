@@ -1,5 +1,5 @@
-add_subdirectory(boss)
-# add_subdirectory(fps_gl_helpers)
+add_subdirectory(nicp_boss)
+add_subdirectory(nicp_gl_helpers)
 # add_subdirectory(fps_core)
 # add_subdirectory(fps_core_examples)
 # add_subdirectory(fps_core_viewers)

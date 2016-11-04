@@ -34,12 +34,24 @@ if(OPENMP_FOUND)
  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 endif(OPENMP_FOUND)
 
+# Find Eigen3
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
+
+# Find OpenGL
+find_package(OpenGL REQUIRED)
+include_directories(${OPENGL_INCLUDE})
+
+# Find Qt4
+find_package(Qt4 REQUIRED)
+include_directories(${QT_INCLUDES})
+
+# Find QGLViewer
+find_package(QGLViewer REQUIRED)
+include_directories(${QGLVIEWER_INCLUDE_DIR})
+
 # Find PkgConfig
 # find_package(PkgConfig REQUIRED)
-
-# Find Eigen3
-# find_package(Eigen3 REQUIRED)
-# include_directories(${EIGEN3_INCLUDE_DIR})
 
 # Find Boost
 # find_package(Boost COMPONENTS system filesystem REQUIRED)
@@ -49,7 +61,6 @@ endif(OPENMP_FOUND)
 # include(FindPackageHandleStandardArgs)
 # find_package_handle_standard_args(FLANN DEFAULT_MSG FLANN_LIBRARY FLANN_INCLUDE_DIR)
 
-
 # Find OpenCV
 # find_package(OpenCV)
 # include_directories(${OpenCV_INCLUDE_DIRS})
@@ -57,18 +68,6 @@ endif(OPENMP_FOUND)
 # Find ZLib
 # find_package(ZLIB REQUIRED)
 # include_directories(${ZLIB_INCLUDE_DIRS})
-
-# Find OpenGL
-# find_package(OpenGL REQUIRED)
-# include_directories(${OPENGL_INCLUDE})
-
-# Find Qt4
-# find_package(Qt4 REQUIRED)
-# include_directories(${QT_INCLUDES})
-
-# Find QGLViewer
-# find_package(QGLViewer REQUIRED)
-# include_directories(${QGLVIEWER_INCLUDE_DIR})
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -152,7 +151,8 @@ catkin_package(
   INCLUDE_DIRS 
   LIBRARIES
   src
-  boss_library
+  nicp_boss_library
+  nicp_gl_helpers_library
   # txt_io_library
   # fps_core_library			
   # fps_tracker_library
@@ -164,7 +164,6 @@ catkin_package(
   # fps_global_optimization_library
   # fps_loop_closer2_library
   # fps_loop_closer_library
-  # fps_gl_helpers_library
   # fps_core_viewers_library
   # fps_tracker_viewers_library
   # fps_map_viewers_library

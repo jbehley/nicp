@@ -1,4 +1,4 @@
-add_library(boss_library SHARED
+add_library(nicp_boss_library SHARED
   stream.cpp stream.h
   bidirectional_serializer.cpp bidirectional_serializer.h
   blob.cpp blob.h     
@@ -23,4 +23,4 @@ add_library(boss_library SHARED
   serialization_context.cpp serialization_context.h
 )
 
-target_link_libraries(boss_library ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
+target_link_libraries(nicp_boss_library ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
