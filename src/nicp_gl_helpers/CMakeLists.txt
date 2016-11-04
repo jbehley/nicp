@@ -1,6 +1,6 @@
 add_library(nicp_gl_helpers_library SHARED
-  opengl_primitives.h opengl_primitives.cpp
-  simple_viewer.h simple_viewer.cpp
+  opengl_primitives.cpp opengl_primitives.h
+  simple_viewer.cpp simple_viewer.h
 )
 
 target_link_libraries(nicp_gl_helpers_library

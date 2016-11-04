@@ -1,10 +1,9 @@
 add_library(nicp_boss_library SHARED
-  stream.cpp stream.h
   bidirectional_serializer.cpp bidirectional_serializer.h
   blob.cpp blob.h     
   deserializer.cpp deserializer.h
-  identifiable.cpp identifiable.h
   id_context.cpp id_context.h   
+  identifiable.cpp identifiable.h
   id_placeholder.cpp id_placeholder.h
   json_message_parser.cpp json_message_parser.h
   json_message_writer.cpp json_message_writer.h
@@ -18,9 +17,10 @@ add_library(nicp_boss_library SHARED
   object_data.cpp object_data.h
   object_parser.cpp object_parser.h
   object_writer.cpp object_writer.h
-  serializable.cpp serializable.h
-  serializer.cpp serializer.h
+  serializable.cpp serializable.h  
   serialization_context.cpp serialization_context.h
+  serializer.cpp serializer.h
+  stream.cpp stream.h
 )
 
 target_link_libraries(nicp_boss_library ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
