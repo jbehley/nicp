@@ -19,5 +19,5 @@
 
 #include "message_writer.h"
 
-using namespace boss;
+using namespace nicp;
 

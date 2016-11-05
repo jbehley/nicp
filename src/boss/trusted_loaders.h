@@ -1,16 +1,16 @@
 #define BOSS_TRUSTED_LOADER_H(ns) \
     namespace ns { \
-    class ns ## _dummy_obj : public boss::Serializable { \
+    class ns ## _dummy_obj : public nicp::Serializable { \
     public: \
-        virtual void serialize(boss::ObjectData&, boss::IdContext&); \
-        virtual void deserialize(boss::ObjectData&, boss::IdContext&); \
+        virtual void serialize(nicp::ObjectData&, nicp::IdContext&); \
+        virtual void deserialize(nicp::ObjectData&, nicp::IdContext&); \
     };\
     }
 
 #define BOSS_TRUSTED_LOADER_CPP(ns) \
     namespace ns { \
-        void ns ## _dummy_obj::serialize(boss::ObjectData&, boss::IdContext&) { } \
-        void ns ## _dummy_obj::deserialize(boss::ObjectData&, boss::IdContext&) { } \
+        void ns ## _dummy_obj::serialize(nicp::ObjectData&, nicp::IdContext&) { } \
+        void ns ## _dummy_obj::deserialize(nicp::ObjectData&, nicp::IdContext&) { } \
     BOSS_REGISTER_CLASS(ns ## _dummy_obj); \
     }
 

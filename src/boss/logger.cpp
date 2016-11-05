@@ -19,5 +19,5 @@
 
 #include "logger.h"
 
-using namespace boss;
+using namespace nicp;
 

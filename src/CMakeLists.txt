@@ -1,6 +1,6 @@
 add_subdirectory(boss)
-# add_subdirectory(gl_helpers)
-# add_subdirectory(core)
+add_subdirectory(globals)
+add_subdirectory(core)
 # add_subdirectory(fps_core_examples)
 # add_subdirectory(fps_core_viewers)
 # add_subdirectory(fps_tracker)

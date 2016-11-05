@@ -20,7 +20,7 @@
 
 #include <sys/time.h>
 
-using namespace boss;
+using namespace nicp;
 
 double Message::getCurrentTime() {
   timeval time;

@@ -21,7 +21,7 @@
 
 #include "serializable.h"
 
-namespace boss {
+namespace nicp {
 
 class IdContext;
 

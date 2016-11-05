@@ -26,7 +26,7 @@
 
 #include "identifiable.h"
 
-namespace boss {
+namespace nicp {
 
 class BaseBLOBReference;
 
@@ -105,4 +105,4 @@ T* BLOBReference<T>::get() {
 }
 
 #define BOSS_REGISTER_BLOB(class_name) \
-  static boss::AutoRegisterer<boss::BLOBReference<class_name > > _reg_##class_name(#class_name,typeid(BLOBReference<class_name >).name());
+  static nicp::AutoRegisterer<nicp::BLOBReference<class_name > > _reg_##class_name(#class_name,typeid(BLOBReference<class_name >).name());

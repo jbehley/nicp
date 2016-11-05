@@ -19,5 +19,5 @@
 
 #include "message_parser.h"
 
-using namespace boss;
+using namespace nicp;
 

@@ -22,7 +22,7 @@
 #include "serialization_context.h"
 #include "serializer.h"
 
-using namespace boss;
+using namespace nicp;
 using namespace std;
 using namespace boost::filesystem;
 

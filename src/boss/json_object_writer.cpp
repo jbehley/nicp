@@ -24,7 +24,7 @@
 #include "object_data.h"
 
 using namespace std;
-using namespace boss;
+using namespace nicp;
 
 static string escapeJSONString(const string& str) {
   string escaped;

@@ -19,5 +19,5 @@
 
 #include "object_writer.h"
 
-using namespace boss;
+using namespace nicp;
 

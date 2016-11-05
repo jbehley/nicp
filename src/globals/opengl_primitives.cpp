@@ -3,7 +3,7 @@
 
 #include "opengl_primitives.h"
 
-namespace GLHelpers {
+namespace nicp {
 
   class GLUWrapper {
   public:

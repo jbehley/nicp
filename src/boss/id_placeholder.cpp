@@ -19,7 +19,7 @@
 
 #include "id_placeholder.h"
 
-using namespace boss;
+using namespace nicp;
 using namespace std;
 
 void IdPlaceholder::resolve(Identifiable* instance) {

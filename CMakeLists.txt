@@ -146,9 +146,9 @@ catkin_package(
   INCLUDE_DIRS 
   LIBRARIES
   src
-  nicp_boss_library
-  nicp_gl_helpers_library
-  nicp_core_library			
+  nicp_boss
+  nicp_globals
+  nicp_core			
   # txt_io_library
   # fps_tracker_library
   # fps_extrinsic_calibrator_library	

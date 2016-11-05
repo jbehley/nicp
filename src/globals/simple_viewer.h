@@ -3,7 +3,7 @@
 #include <qevent.h>
 #include <qglviewer.h>
 
-namespace GLHelpers {
+namespace nicp {
   
   class SimpleViewer: public QGLViewer {
   public:

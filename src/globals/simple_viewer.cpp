@@ -1,6 +1,6 @@
 #include <cstring>
 
-#include "nicp_gl_helpers/opengl_primitives.h"
+#include "opengl_primitives.h"
 
 #include "simple_viewer.h"
 
@@ -10,10 +10,10 @@
 #define qglv_real float
 #endif
 
-namespace GLHelpers {
+namespace nicp {
   using namespace std;
   using namespace Eigen;
-  using namespace GLHelpers;
+  using namespace nicp;
   
   class StandardCamera: public qglviewer::Camera {
   public:

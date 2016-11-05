@@ -23,7 +23,7 @@
 #include "id_placeholder.h"
 
 using namespace std;
-using namespace boss;
+using namespace nicp;
 
 //ValueData
 int ValueData::getInt() {
@@ -319,7 +319,7 @@ Identifiable* PointerReference::getPointer() {
     return o; \
   }
 
-namespace boss {
+namespace nicp {
   
   STREAM_OPS(bool, setBool, getBool)
   STREAM_OPS(int, setInt, getInt)

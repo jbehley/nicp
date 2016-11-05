@@ -24,7 +24,7 @@
 #include "serialization_context.h"
 #include "id_context.h"
 
-using namespace boss;
+using namespace nicp;
 using namespace std;
 
 BLOB::~BLOB() {

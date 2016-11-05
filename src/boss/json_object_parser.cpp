@@ -26,11 +26,11 @@
 #include "object_data.h"
 
 using namespace std;
-using namespace boss;
+using namespace nicp;
 
 typedef string::iterator Iterator;
 
-namespace boss {
+namespace nicp {
 
 namespace qi = boost::spirit::qi;
 namespace ascii = boost::spirit::ascii;

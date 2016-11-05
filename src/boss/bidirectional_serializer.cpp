@@ -1,6 +1,6 @@
 #include "bidirectional_serializer.h"
 
-namespace boss {
+namespace nicp {
   BidirectionalSerializer::BidirectionalSerializer(SerializationContext* sc) : Serializer(sc), Deserializer(sc){
   }
 

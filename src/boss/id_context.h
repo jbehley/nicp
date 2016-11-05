@@ -23,7 +23,7 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/locks.hpp>
 #include "serialization_context.h"
-namespace boss {
+namespace nicp {
 
 class Identifiable;
 class IdPlaceholder;

@@ -24,7 +24,7 @@
 #include "serializer.h"
 #include "deserializer.h"
 
-namespace boss {
+namespace nicp {
 
 class MessageWriter;
 class ObjectWriter;

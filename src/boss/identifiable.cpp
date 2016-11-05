@@ -23,7 +23,7 @@
 #include "id_context.h"
 #include "object_data.h"
 
-using namespace boss;
+using namespace nicp;
 using namespace std;
 
 Identifiable::Identifiable(int id, IdContext* context): _id(id), _context(context) {

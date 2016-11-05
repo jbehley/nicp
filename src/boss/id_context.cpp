@@ -23,7 +23,7 @@
 #include "id_placeholder.h"
 #include <stdexcept>
 
-using namespace boss;
+using namespace nicp;
 using namespace std;
 using boost::mutex;
 using boost::lock_guard;

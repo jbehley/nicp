@@ -22,7 +22,7 @@
 
 #include "object_data.h"
 
-using namespace boss;
+using namespace nicp;
 
 MessageData::MessageData() {
   _data=new ObjectData();

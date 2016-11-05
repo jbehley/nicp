@@ -21,7 +21,7 @@
 
 #include <string>
 
-namespace boss {
+namespace nicp {
 
 class Serializable;
 

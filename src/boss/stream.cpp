@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <fstream>
 
-namespace boss {
+namespace nicp {
 
   InputOutputStream::~InputOutputStream(){
   }

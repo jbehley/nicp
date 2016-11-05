@@ -28,7 +28,7 @@
 #include "id_context.h"
 #include "serialization_context.h"
 
-namespace boss {
+namespace nicp {
   
 class Serializable;
 class ValueData;

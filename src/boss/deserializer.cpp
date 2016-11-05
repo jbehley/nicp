@@ -31,7 +31,7 @@
 #include "id_placeholder.h"
 
 using namespace std;
-using namespace boss;
+using namespace nicp;
 
 static ValueData* processData(ValueData* vdata, IdContext& context, vector<int>& danglingRefs, vector<int>& declaredIDs) {
   switch (vdata->type()) {

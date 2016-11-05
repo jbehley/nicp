@@ -24,7 +24,7 @@
 
 #include "blob.h"
 
-namespace boss {
+namespace nicp {
 
   class Serializer;
 

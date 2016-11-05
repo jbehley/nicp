@@ -26,7 +26,7 @@
 #include <typeinfo>
 #include "trusted_loaders.h"
 
-namespace boss {
+namespace nicp {
 
 class ObjectData;
 class IdContext;
@@ -81,9 +81,9 @@ public:
 };
 
 #define BOSS_REGISTER_CLASS(class_name) \
-  static boss::AutoRegisterer<class_name > _reg_##class_name(#class_name,typeid(class_name).name());
+  static nicp::AutoRegisterer<class_name > _reg_##class_name(#class_name,typeid(class_name).name());
 
 #define BOSS_REGISTER_CLASS_WITH_NAME(class_name, type_name) \
-  static boss::AutoRegisterer<class_name > _reg_##class_name(#type_name,typeid(class_name).name()));
+  static nicp::AutoRegisterer<class_name > _reg_##class_name(#type_name,typeid(class_name).name()));
 
 }

@@ -23,7 +23,7 @@
 
 #include "message_data.h"
 
-namespace boss {
+namespace nicp {
 
 class MessageWriter {
 public:

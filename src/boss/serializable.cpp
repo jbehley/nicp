@@ -24,7 +24,7 @@
 #include "object_data.h"
 
 using namespace std;
-using namespace boss;
+using namespace nicp;
 
 static map<string, Serializable* (*)()>& factoryMap() {
   static map<string, Serializable* (*)()> FACTORY_MAP;
@@ -36,7 +36,7 @@ static map<string, string>& typeIdMap() {
   return TYPEID_MAP;
 }
 
-vector<string> boss::getClassNames() {
+vector<string> nicp::getClassNames() {
     vector<string> r;
     map<string, Serializable* (*)()>& fm = factoryMap();
     for (map<string, Serializable*(*)()>::iterator it = fm.begin(); it != fm.end(); ++it) {

@@ -26,7 +26,7 @@
 #include "message.h"
 #include "blob.h"
 
-namespace boss {
+namespace nicp {
 
 class MessageWriter;
 class ObjectWriter;

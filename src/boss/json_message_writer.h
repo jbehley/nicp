@@ -21,7 +21,7 @@
 
 #include "message_writer.h"
 
-namespace boss {
+namespace nicp {
 
 class JSONMessageWriter: virtual public MessageWriter {
 public:

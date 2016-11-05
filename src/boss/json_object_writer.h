@@ -21,7 +21,7 @@
 
 #include "object_writer.h"
 
-namespace boss {
+namespace nicp {
 
 class JSONObjectWriter: public ObjectWriter {
 public:

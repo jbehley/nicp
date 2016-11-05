@@ -10,7 +10,7 @@
    defines some basic graphical primitives such as circles, axes, cylinders and so on
 */
 
-namespace GLHelpers {
+namespace nicp {
   
   /**
    * multiplies to the right an Eigen isometry to the top element of the gl stack

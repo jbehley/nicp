@@ -22,7 +22,7 @@
 #include<iostream>
 #include<string>
 
-namespace boss {
+namespace nicp {
 
 class ObjectData;
 

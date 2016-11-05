@@ -27,7 +27,7 @@
 
 #include "id_placeholder.h"
 
-namespace boss {
+namespace nicp {
 
 enum ValueType {
   BOOL, NUMBER, STRING, ARRAY, OBJECT, POINTER, POINTER_REF

@@ -23,7 +23,7 @@
 
 #include "identifiable.h"
 
-namespace boss {
+namespace nicp {
 
 class IdContext;
 

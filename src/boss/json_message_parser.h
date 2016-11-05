@@ -21,7 +21,7 @@
 
 #include "message_parser.h"
 
-namespace boss {
+namespace nicp {
 
 struct _json_parser_impl;
 

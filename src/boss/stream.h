@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 
-namespace boss {
+namespace nicp {
 
   class InputOutputStream {
   public:
