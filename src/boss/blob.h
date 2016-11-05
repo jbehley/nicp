@@ -99,9 +99,6 @@ T* BLOBReference<T>::get() {
       blob.release();
     }
   }
-  // std::cerr << "get: " << className()
-  //      << " instance: "<< _instance
-  //      << " ptr: " << this << " context: " << getContext() << std::endl;
   return (T*) _instance;
 }
 

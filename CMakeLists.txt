@@ -1,11 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(nicp_suite)
 
-#set the default path for built executables to the "bin" directory
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-#set the default path for built libraries to the "lib" directory
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
-
 set(ENABLE_ROS_NODES true)
 
 ## Find catkin macros and libraries
@@ -50,20 +45,20 @@ include_directories(${QT_INCLUDES})
 find_package(QGLViewer REQUIRED)
 include_directories(${QGLVIEWER_INCLUDE_DIR})
 
-# Find PkgConfig
-# find_package(PkgConfig REQUIRED)
+# Find OpenCV
+find_package(OpenCV)
+include_directories(${OpenCV_INCLUDE_DIRS})
 
 # Find Boost
-# find_package(Boost COMPONENTS system filesystem REQUIRED)
+find_package(Boost COMPONENTS system filesystem REQUIRED)
+
+# Find PkgConfig
+find_package(PkgConfig REQUIRED)
 
 # Find Flann
-# pkg_check_modules(FLANN flann REQUIRED)
-# include(FindPackageHandleStandardArgs)
-# find_package_handle_standard_args(FLANN DEFAULT_MSG FLANN_LIBRARY FLANN_INCLUDE_DIR)
-
-# Find OpenCV
-# find_package(OpenCV)
-# include_directories(${OpenCV_INCLUDE_DIRS})
+pkg_check_modules(FLANN flann REQUIRED)
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(FLANN DEFAULT_MSG FLANN_LIBRARY FLANN_INCLUDE_DIR)
 
 # Find ZLib
 # find_package(ZLIB REQUIRED)
@@ -153,8 +148,8 @@ catkin_package(
   src
   nicp_boss_library
   nicp_gl_helpers_library
+  nicp_core_library			
   # txt_io_library
-  # fps_core_library			
   # fps_tracker_library
   # fps_extrinsic_calibrator_library	
   # fps_map_library
