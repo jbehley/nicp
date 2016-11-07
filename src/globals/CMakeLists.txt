@@ -1,6 +1,7 @@
 add_library(nicp_globals SHARED
   opengl_primitives.cpp opengl_primitives.h
   simple_viewer.cpp simple_viewer.h
+  system_utils.cpp system_utils.h
 )
 
 target_link_libraries(nicp_globals

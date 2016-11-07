@@ -5,8 +5,6 @@
 
 /**
  * @file   system_utils.h
- * @Author Giorgio Grisetti
- * @date   December 2014
  * @brief  This file contains some common routines and classes to get the system time, to print a banner on a comand line
  * and to monitor the process resource usage
  */

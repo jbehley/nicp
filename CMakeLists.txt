@@ -3,6 +3,9 @@ project(nicp_suite)
 
 set(ENABLE_ROS_NODES true)
 
+# Optional compiling parts
+option(BUILD_NICP_CORE_TESTS "enable NICP core tests" true)
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
@@ -52,13 +55,9 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 # Find Boost
 find_package(Boost COMPONENTS system filesystem REQUIRED)
 
-# Find PkgConfig
-find_package(PkgConfig REQUIRED)
-
 # Find Flann
-pkg_check_modules(FLANN flann REQUIRED)
-include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(FLANN DEFAULT_MSG FLANN_LIBRARY FLANN_INCLUDE_DIR)
+find_package(Flann REQUIRED)
+include_directories(${FLANN_INCLUDE_DIR})
 
 # Find ZLib
 # find_package(ZLIB REQUIRED)
