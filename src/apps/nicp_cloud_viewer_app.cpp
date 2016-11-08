@@ -54,5 +54,9 @@ int main(int argc, char** argv) {
   viewer.show();
   app.exec();
 
+  for(std::list<Cloud*>::iterator it = clouds.begin(); it != clouds.end(); ++it) {
+    delete *it;
+  }  
+  
   return 0;
 }

@@ -1,23 +1,32 @@
-#include "core/nn_aligner.h"
 #include <fstream>
+
+#include "core/nn_aligner.h"
+#include "globals/system_utils.h"
 
 using namespace std;
 using namespace nicp;
 
+const char* banner[] = {
+  "nicp_nn_aligner_example: example on how to register two point clouds using a nearest neighbor KD-tree based aligner",
+  "usage:",
+  " nicp_nn_aligner_example <model1.dat> <model2.dat> <output.dat>",
+  0
+};
+
 int main(int argc, char** argv) {
-  if (argc<4) {
-    cerr << "usage: " << argv[0] << "<model1.dat> <model2.dat> <output.dat>" << endl;
+  if(argc < 4) {
+    nicp::printBanner(banner);
     return 0;
   }
 
   ifstream is1(argv[1]);
-  if(! is1) {
+  if(!is1) {
     cerr << "unable to load file " << argv[1] << endl;
     return 0;
   }
 
   ifstream is2(argv[2]);
-  if(! is2) {
+  if(!is2) {
     cerr << "unable to load file " << argv[2] << endl;
     return 0;
   }
@@ -36,9 +45,11 @@ int main(int argc, char** argv) {
   Cloud current_orig = current;
     
   NNAligner aligner;
+  aligner.setIterations(10);
+  aligner.solver().setDamping(0);
+  aligner.solver().setMaxError(0.01);
   aligner.setReferenceModel(&reference);
   aligner.setCurrentModel(&current);
-  aligner.setIterations(10);
   aligner.align(Eigen::Isometry3f::Identity());
 
   cerr << "T: " << endl << aligner.T().matrix() << endl;

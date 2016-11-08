@@ -29,7 +29,7 @@ namespace nicp {
   }
 
 
-  SphericalProjector::SphericalProjector(){
+  SphericalProjector::SphericalProjector() {
     _K <<  M_PI, M_PI/4, 360/M_PI, 360/M_PI;
     _image_cols=_K(0)*_K(2);
     _image_rows=_K(1)*_K(3);

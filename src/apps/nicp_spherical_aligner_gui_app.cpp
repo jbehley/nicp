@@ -45,7 +45,9 @@ int main(int argc, char** argv) {
     return 0;
   }
 
-  ProjectiveAligner aligner(new SphericalProjector);
+  SphericalProjector* projector = new SphericalProjector();
+
+  ProjectiveAligner aligner(projector);
   aligner.projector().setMaxDistance(100.0);
   aligner.setDefaultConfig("1Level");
   aligner.solver().setDamping(0);
@@ -70,5 +72,10 @@ int main(int argc, char** argv) {
   viewer.show();
   app.exec();
 
+  delete projector;
+  for(std::list<Cloud*>::iterator it = clouds.begin(); it != clouds.end(); ++it) {
+    delete *it;
+  }
+    
   return 0;
 }

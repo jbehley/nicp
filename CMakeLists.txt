@@ -3,9 +3,6 @@ project(nicp_suite)
 
 set(ENABLE_ROS_NODES true)
 
-# Optional compiling parts
-option(BUILD_NICP_TESTS "enable NICP tests" true)
-
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages

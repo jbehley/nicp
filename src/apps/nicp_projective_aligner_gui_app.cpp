@@ -44,7 +44,10 @@ int main(int argc, char** argv) {
     return 0;
   }
 
-  ProjectiveAligner aligner;
+  PinholeProjector* projector = new PinholeProjector();
+  
+  ProjectiveAligner aligner(projector);
+  aligner.projector().setMaxDistance(3);
   aligner.setDefaultConfig("Xtion320x240");
   aligner.solver().setDamping(0);
   aligner.solver().setMaxError(0.01);
@@ -67,6 +70,11 @@ int main(int argc, char** argv) {
   }
   viewer.show();
   app.exec();
-
+  
+  delete projector;
+  for(std::list<Cloud*>::iterator it = clouds.begin(); it != clouds.end(); ++it) {
+    delete *it;
+  }  
+  
   return 0;
 }

@@ -3,8 +3,6 @@
 #include "globals/system_utils.h"
 
 #include "projective_aligner.h"
-#include "pinhole_projector.h"
-#include "spherical_projector.h"
 #include "depth_utils.h"
 
 #define _USE_IMAGE_SHRINK
@@ -115,9 +113,8 @@ namespace nicp {
     _level_parameters = it->second;
   }
 
-  ProjectiveAligner::ProjectiveAligner(BaseProjector* p):
-    _projector(p ? p : new PinholeProjector()),
-    _finder(&_solver, _projector )
+  ProjectiveAligner::ProjectiveAligner(BaseProjector* p) :
+    _projector(p), _finder(&_solver, _projector )
   {
     _initDefaultConfigs();
     _solver.setMaxError(.0001);

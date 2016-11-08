@@ -1,8 +1,10 @@
-#include "core/spherical_projector.h"
-#include "core/spherical_camera_info.h"
-#include "core/depth_utils.h"
 #include <sstream>
 #include <fstream>
+
+#include "core/depth_utils.h"
+#include "core/spherical_camera_info.h"
+#include "core/spherical_projector.h"
+#include "globals/system_utils.h"
 
 using namespace std;
 using namespace nicp;
@@ -64,15 +66,21 @@ void makeSphericalImage(FloatImage& depth,
   }
 }
 
+const char* banner[] = {
+  "nicp_3dscan2cloud_example: example on how to convert a point cloud from txt file to nicp format using a spherical projector",
+  "usage:",
+  "nicp_3dscan2cloud_example <txt file with x, y, z point coordinates one per line> <model.dat>",
+  0
+};
 
 int main(int argc, char** argv) {
-  if (argc<3) {
-    cerr << "usage: " << argv[0] << "<txt_file_with_x_y_z_one_per_line> <model.dat>" << endl;
+  if(argc < 3) {
+    nicp::printBanner(banner);
     return 0;
   }
 
   ifstream is1(argv[1]);
-  if(! is1) {
+  if(!is1) {
     cerr << "unable to load file " << argv[1] << endl;
     return 0;
   }
@@ -86,16 +94,16 @@ int main(int argc, char** argv) {
   cerr << "making spherical image" << endl;
   FloatImage spherical_float_depth;
 
-  float hfov=1.5*M_PI;
-  float hres=360/M_PI;
-  float vfov=0.5*M_PI;
-  float vres=360/M_PI;
-  float depth_scale=1e2; // resolution: 1cm/pixel
+  float hfov = 1.5 * M_PI;
+  float hres = 360 / M_PI;
+  float vfov = 0.5 * M_PI;
+  float vres = 360 / M_PI;
+  float depth_scale = 1e2; // resolution: 1cm/pixel
   Eigen::Vector4f K;
-  K<< hfov, vfov, hres, vres;
+  K << hfov, vfov, hres, vres;
   makeSphericalImage(spherical_float_depth, 
 		     points,
-		     hfov, vfov, hres, vres, 30.0f); /*float range_max=*/
+		     hfov, vfov, hres, vres, 30.0f);
    
   cv::imshow("depth", spherical_float_depth);
   cv::waitKey();
@@ -105,7 +113,7 @@ int main(int argc, char** argv) {
   SphericalProjector projector;
   SphericalCameraInfo camera_info;
   camera_info.setCameraMatrix(K);
-  camera_info.setDepthScale(1./depth_scale);
+  camera_info.setDepthScale(1.0/depth_scale);
   projector.setCameraInfo(&camera_info);
   projector.setImageSize(spherical_float_depth.rows, spherical_float_depth.cols);
   projector.setMaxDistance(50);
@@ -117,4 +125,5 @@ int main(int argc, char** argv) {
   ofstream os(argv[2]);
   dest_model.write(os);
 
+  return 0;
 }

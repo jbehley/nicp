@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
 
   NNAligner aligner;
   aligner.setIterations(10);
-  aligner.solver().setDamping(100);
+  aligner.solver().setDamping(0);
   aligner.solver().setMaxError(0.01);
   aligner.finder().setPointsDistance(0.1);
     
@@ -69,5 +69,9 @@ int main(int argc, char** argv) {
   viewer.show();
   app.exec();
 
+  for(std::list<Cloud*>::iterator it = clouds.begin(); it != clouds.end(); ++it) {
+    delete *it;
+  }  
+  
   return 0;
 }
