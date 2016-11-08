@@ -1,5 +1,12 @@
 add_library(nicp_globals SHARED
+  base_image_message.cpp base_image_message.h
+  base_message.cpp base_message.h
+  base_sensor_message.cpp base_sensor_message.h
+  message_factory.cpp message_factory.h
+  message_seq_synchronizer.cpp message_seq_synchronizer.h  
   opengl_primitives.cpp opengl_primitives.h
+  pinhole_image_message.cpp pinhole_image_message.h
+  sensor_message_sorter.cpp sensor_message_sorter.h
   simple_viewer.cpp simple_viewer.h
   system_utils.cpp system_utils.h
 )

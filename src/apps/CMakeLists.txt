@@ -24,7 +24,6 @@ target_link_libraries(nicp_projective_aligner_gui_app
   nicp_core 
   nicp_boss
   nicp_globals
-  ${FLANN_LIBRARIES}
   ${QGLVIEWER_LIBRARY} 
   ${QT_QTXML_LIBRARY} 
   ${QT_QTOPENGL_LIBRARY} 
@@ -45,7 +44,6 @@ target_link_libraries(nicp_spherical_aligner_gui_app
   nicp_core 
   nicp_boss
   nicp_globals
-  ${FLANN_LIBRARIES}
   ${QGLVIEWER_LIBRARY} 
   ${QT_QTXML_LIBRARY} 
   ${QT_QTOPENGL_LIBRARY} 
