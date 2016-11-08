@@ -22,10 +22,10 @@ using namespace Eigen;
 using namespace nicp;
 
 const char* banner[] = {
-  "nicp_cloud_viewer_app",
+  "nicp_cloud_viewer_gui_app",
   "shows a set of clouds, shift + left click to select clouds in the viewer",
   "usage:",
-  "nicp_cloud_viewer_app <cloud1.dat> <cloud2.dat> ...",
+  "nicp_cloud_viewer_gui_app <cloud1.dat> <cloud2.dat> ...",
   0
 };
 

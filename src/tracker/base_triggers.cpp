@@ -67,7 +67,7 @@ namespace nicp {
     _tags_map["tail_time"] = buf;
 
     sprintf(buf,"%lf", 1./(_tracker->currentTime() - _tracker->startTime()));
-    _tags_map["nicp"] = buf;
+    _tags_map["fps"] = buf;
 
     sprintf(buf,"%06d", _tracker->lastSeq());
     _tags_map["seq"] = buf;

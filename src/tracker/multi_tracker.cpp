@@ -40,8 +40,6 @@ namespace nicp {
       al->setDefaultConfig(config);
       return dt;
     }
-
-#ifdef _FLANN_ENABLED_
     if (type == "nn") {
       NNAligner * al = new NNAligner();
       dt = new MultiTracker(al);
@@ -50,7 +48,6 @@ namespace nicp {
       al->setIterations(10);
       return dt;
     }
-#endif
     return 0;
   }
 

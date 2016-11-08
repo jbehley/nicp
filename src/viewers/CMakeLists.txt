@@ -1,8 +1,14 @@
 add_library(nicp_viewers SHARED
   aligner_viewer.cpp aligner_viewer.h
   cloud_viewer.cpp cloud_viewer.h
+  local_mapper_viewer.cpp local_mapper_viewer.h
+  tracker_viewer.cpp tracker_viewer.h
+  trajectory_viewer.cpp trajectory_viewer.h
 )
 target_link_libraries(nicp_viewers
+  nicp_local_mapper
+  nicp_map
+  nicp_tracker
   nicp_core 
   nicp_boss
   nicp_globals

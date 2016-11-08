@@ -29,6 +29,7 @@ namespace nicp {
     virtual void postSelection(const QPoint& point);
     std::set<const Cloud*> _selected_objects;
     bool _is_orthographic;
+    
   };
 
 }
