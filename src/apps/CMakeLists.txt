@@ -1,0 +1,82 @@
+add_executable(nicp_cloud_viewer_app nicp_cloud_viewer_app.cpp)
+target_link_libraries(nicp_cloud_viewer_app
+  nicp_viewers
+  nicp_core 
+  nicp_boss
+  nicp_globals
+  ${QGLVIEWER_LIBRARY} 
+  ${QT_QTXML_LIBRARY} 
+  ${QT_QTOPENGL_LIBRARY} 
+  ${QT_QTGUI_LIBRARY} 
+  ${QT_QTCORE_LIBRARY} 
+  ${OPENGL_gl_LIBRARY} 
+  ${OPENGL_glu_LIBRARY}
+  ${ZLIB_LIBRARIES} 
+  ${OpenCV_LIBS}
+  ${Boost_FILESYSTEM_LIBRARY} 
+  ${Boost_SYSTEM_LIBRARY}
+  ${catkin_LIBRARIES}
+)
+
+add_executable(nicp_projective_aligner_gui_app nicp_projective_aligner_gui_app.cpp)
+target_link_libraries(nicp_projective_aligner_gui_app
+  nicp_viewers
+  nicp_core 
+  nicp_boss
+  nicp_globals
+  ${FLANN_LIBRARIES}
+  ${QGLVIEWER_LIBRARY} 
+  ${QT_QTXML_LIBRARY} 
+  ${QT_QTOPENGL_LIBRARY} 
+  ${QT_QTGUI_LIBRARY} 
+  ${QT_QTCORE_LIBRARY} 
+  ${OPENGL_gl_LIBRARY} 
+  ${OPENGL_glu_LIBRARY}
+  ${ZLIB_LIBRARIES} 
+  ${OpenCV_LIBS}
+  ${Boost_FILESYSTEM_LIBRARY} 
+  ${Boost_SYSTEM_LIBRARY}
+  ${catkin_LIBRARIES}
+)
+
+add_executable(nicp_spherical_aligner_gui_app nicp_spherical_aligner_gui_app.cpp)
+target_link_libraries(nicp_spherical_aligner_gui_app
+  nicp_viewers
+  nicp_core 
+  nicp_boss
+  nicp_globals
+  ${FLANN_LIBRARIES}
+  ${QGLVIEWER_LIBRARY} 
+  ${QT_QTXML_LIBRARY} 
+  ${QT_QTOPENGL_LIBRARY} 
+  ${QT_QTGUI_LIBRARY} 
+  ${QT_QTCORE_LIBRARY} 
+  ${OPENGL_gl_LIBRARY} 
+  ${OPENGL_glu_LIBRARY}
+  ${ZLIB_LIBRARIES} 
+  ${OpenCV_LIBS}
+  ${Boost_FILESYSTEM_LIBRARY} 
+  ${Boost_SYSTEM_LIBRARY}
+  ${catkin_LIBRARIES}
+)
+
+add_executable(nicp_nn_aligner_gui_app nicp_nn_aligner_gui_app.cpp)
+target_link_libraries(nicp_nn_aligner_gui_app
+  nicp_viewers
+  nicp_core 
+  nicp_boss
+  nicp_globals
+  ${FLANN_LIBRARIES}
+  ${QGLVIEWER_LIBRARY} 
+  ${QT_QTXML_LIBRARY} 
+  ${QT_QTOPENGL_LIBRARY} 
+  ${QT_QTGUI_LIBRARY} 
+  ${QT_QTCORE_LIBRARY} 
+  ${OPENGL_gl_LIBRARY} 
+  ${OPENGL_glu_LIBRARY}
+  ${ZLIB_LIBRARIES} 
+  ${OpenCV_LIBS}
+  ${Boost_FILESYSTEM_LIBRARY} 
+  ${Boost_SYSTEM_LIBRARY}
+  ${catkin_LIBRARIES}
+)

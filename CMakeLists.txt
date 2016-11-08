@@ -4,7 +4,7 @@ project(nicp_suite)
 set(ENABLE_ROS_NODES true)
 
 # Optional compiling parts
-option(BUILD_NICP_CORE_TESTS "enable NICP core tests" true)
+option(BUILD_NICP_TESTS "enable NICP tests" true)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -60,8 +60,8 @@ find_package(Flann REQUIRED)
 include_directories(${FLANN_INCLUDE_DIR})
 
 # Find ZLib
-# find_package(ZLIB REQUIRED)
-# include_directories(${ZLIB_INCLUDE_DIRS})
+find_package(ZLIB REQUIRED)
+include_directories(${ZLIB_INCLUDE_DIRS})
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed

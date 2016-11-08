@@ -1,6 +1,5 @@
 #include "core/projective_aligner.h"
 #include "core/depth_utils.h"
-#include "core/spherical_projector.h"
 
 #include <fstream>
 
@@ -29,29 +28,26 @@ int main(int argc, char** argv) {
   Cloud reference;
   reference.read(is1);
   cerr << "reference has " << reference.size() << " points" << endl;
-  
+
   Cloud current;
   current.read(is2);
   cerr << "current has " << current.size() << " points" << endl;
-
-  SphericalProjector* projector=new SphericalProjector();
-
-  ProjectiveAligner aligner(projector);
-  aligner.finder().setPointsDistance(1.0);
-  aligner.solver().setMaxError(0.01);
+  
+  ProjectiveAligner aligner;
+  aligner.projector().setMaxDistance(4);
   aligner.setReferenceModel(&reference);
   aligner.setCurrentModel(&current);
-  aligner.setDefaultConfig("1Level");
+  aligner.setDefaultConfig("Xtion320x240");
   aligner.solver().setDamping(0);
   aligner.align();
   
   float factor = 255.0f/6;
 
-  FloatImage img = aligner.finder().referenceZBuffer()-aligner.finder().zBuffer();
-  cv::imwrite("differences.png", img*factor);
+  FloatImage img = aligner.finder().zBuffer()-aligner.finder().referenceZBuffer();
+  cv::imwrite("difference.png", img*factor);
   cv::imwrite("current.png", aligner.finder().zBuffer()*factor);
   cv::imwrite("reference.png", aligner.finder().referenceZBuffer()*factor);
-
+  
   cerr << "T: " << endl << aligner.T().matrix() << endl;
   
   current.transformInPlace(aligner.T());

@@ -30,4 +30,3 @@ target_link_libraries(nicp_core
   ${FLANN_LIBRARIES} 
   ${catkin_LIBRARIES}
 )
-
