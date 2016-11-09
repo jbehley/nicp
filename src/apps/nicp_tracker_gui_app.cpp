@@ -26,7 +26,6 @@
 #include "tracker/multi_tracker.h"
 #include "viewers/tracker_viewer.h"
 
-
 using namespace std;
 using namespace Eigen;
 using namespace nicp;
@@ -34,7 +33,7 @@ using namespace nicp;
 Tracker* tracker = 0;
 QApplication* app;
 
-const char* banner[]= {
+const char* banner[] = {
   "nicp_tracker_gui_app: offline tracker working on dump files written with nicp_message_dumper_node",
   "usage:",
   " nicp_tracker_gui_app [options] <dump filename>",
@@ -53,7 +52,7 @@ const char* banner[]= {
   "  -damping:      [float] solver damping, default: 100",
   "  -shrink :      [int]   image downscaling (2 means half size), default: 1",
   "  -prior :       [string] cloud to load as prior", 
-  "  -canvas_scale: <float> extends the frustum of the camera to capture larger offsets, default: 1.5",
+  "  -canvas_scale: [float] extends the frustum of the camera to capture larger offsets, default: 1.5",
   "  -o:            [string] output filename where to write the model, default \"\"",
   "",
   "Once the gui has started you can:", 
@@ -64,34 +63,36 @@ const char* banner[]= {
   0
 };
 
-class ShowIntermediateCloudTrigger: public BaseAligner::Trigger{
+class ShowIntermediateCloudTrigger : public BaseAligner::Trigger {
 public:
-  ShowIntermediateCloudTrigger(TrackerViewer* viewer, BaseAligner* _aligner):
-    BaseAligner::Trigger(_aligner,BaseAligner::Optimization, 0){
+  ShowIntermediateCloudTrigger(TrackerViewer* viewer, BaseAligner* _aligner) :
+    BaseAligner::Trigger(_aligner, BaseAligner::Optimization, 0) {
     _viewer=viewer;
   }
 
-  virtual void action(BaseAligner::TriggerEvent, void* parameters=0){
+  virtual void action(BaseAligner::TriggerEvent, void* parameters = 0) {
     _viewer->updateGL();
     app->processEvents();
-    ProjectiveAligner* projective_aligner=dynamic_cast<ProjectiveAligner*>(aligner());
-    if(0 && projective_aligner) {
-      ProjectiveCorrespondenceFinder& finder=projective_aligner->finder();
-      cv::imshow("reference", finder.referenceZBuffer());
-      cv::imshow("current", finder.zBuffer());
-      cv::waitKey();
-    }
+    ProjectiveAligner* projective_aligner = dynamic_cast<ProjectiveAligner*>(aligner());
+    // if(0 && projective_aligner) {
+    //   ProjectiveCorrespondenceFinder& finder=projective_aligner->finder();
+    //   cv::imshow("reference", finder.referenceZBuffer());
+    //   cv::imshow("current", finder.zBuffer());
+    //   cv::waitKey();
+    // }
     cerr << "  Aligner Transform: " << t2v(aligner()->T()).transpose() << endl;
   }
   TrackerViewer* _viewer;
+
 };
 
-
-void saveCloud(const std::string& prefix, int& num ){
-  if (!tracker->referenceModel())
+void saveCloud(const std::string& prefix, int& num) {
+  if(!tracker->referenceModel()) {
     return;
-  if (!prefix.length())
+  }
+  if(!prefix.length()) {
     return;
+  }
 
   char buf[1024];
   sprintf(buf, "%s-%05d.cloud", prefix.c_str(), num);
@@ -103,11 +104,11 @@ void saveCloud(const std::string& prefix, int& num ){
   num++;
 }
 
-int main(int argc, char **argv) {
-  std::string alignerType="projective";
-  std::string config="Xtion320x240";
+int main(int argc, char** argv) {
+  std::string alignerType = "projective";
+  std::string config = "Xtion320x240";
   std::string transforms_filename = "";
-  std::string output_filename="";
+  std::string output_filename = "";
   std::vector<std::string> depth_topics;
   std::vector<std::string> rgb_topics;
 
@@ -122,96 +123,114 @@ int main(int argc, char **argv) {
   int c = 1;
   float max_distance = 3;
   bool single = false;
-  bool is_spherical=false;
-  bool show_intermediate_frames=false;
-  string prior="";
-  float canvas_scale=1.5;
-  while (c<argc){
-    if (! strcmp(argv[c], "-h")){
+  bool is_spherical = false;
+  bool show_intermediate_frames = false;
+  string prior = "";
+  float canvas_scale = 1.5;
+  while(c < argc) {
+    if(!strcmp(argv[c], "-h")) {
       printBanner(banner);
       return 0;
-    } else if (! strcmp(argv[c], "-show_intermediate_frames")){
-      show_intermediate_frames=true;
+    }
+    else if(!strcmp(argv[c], "-show_intermediate_frames")) {
+      show_intermediate_frames = true;
       cerr << "-show_intermediate_frames" << endl;
-    } else if (! strcmp(argv[c], "-cam_only")){
-      cam_only=true;
+    }
+    else if(!strcmp(argv[c], "-cam_only")) {
+      cam_only = true;
       cerr << "CAM_ONLY" << endl;
-    } else if (! strcmp(argv[c], "-single")){
-      single=true;
+    }
+    else if (!strcmp(argv[c], "-single")) {
+      single = true;
       cerr << "single tracker" << endl;
-    } else if (! strcmp(argv[c], "-aligner")){
+    }
+    else if(!strcmp(argv[c], "-aligner")) {
       c++;
       alignerType = argv[c];
-    } else if (! strcmp(argv[c], "-max_distance")){
+    }
+    else if(!strcmp(argv[c], "-max_distance")) {
       c++;
       max_distance = atof(argv[c]);
-    } else if (! strcmp(argv[c], "-canvas_scale")){
+    }
+    else if(!strcmp(argv[c], "-canvas_scale")) {
       c++;
       canvas_scale = atof(argv[c]);
-    } else if (! strcmp(argv[c], "-min_distance")){
+    }
+    else if(!strcmp(argv[c], "-min_distance")) {
       c++;
       min_distance = atof(argv[c]);
-    } else if (! strcmp(argv[c], "-t")){
+    }
+    else if(!strcmp(argv[c], "-t")) {
       c++;
       depth_topics.push_back(argv[c]);
-    } else if (! strcmp(argv[c], "-rgbt")){
+    }
+    else if(!strcmp(argv[c], "-rgbt")) {
       c++;
       rgb_topics.push_back(argv[c]);
-    } else if (! strcmp(argv[c], "-config")){
+    }
+    else if(!strcmp(argv[c], "-config")) {
       c++;
       config = argv[c];
-    } else if (! strcmp(argv[c], "-shrink")){
+    }
+    else if(!strcmp(argv[c], "-shrink")) {
       c++;
       shrink = atoi(argv[c]);
-    } else if (! strcmp(argv[c], "-bpr")){
+    }
+    else if(!strcmp(argv[c], "-bpr")) {
       c++;
       bad_points_ratio = atof(argv[c]);
-    } else if (! strcmp(argv[c], "-damping")){
+    }
+    else if(!strcmp(argv[c], "-damping")) {
       c++;
       damping = atof(argv[c]);
-    } else if (! strcmp(argv[c], "-tf")){
+    }
+    else if(!strcmp(argv[c], "-tf")) {
       c++;
       transforms_filename = argv[c];
-    } else if (! strcmp(argv[c], "-o")){
+    }
+    else if(!strcmp(argv[c], "-o")) {
       c++;
       output_filename = argv[c];
-    } else if (! strcmp(argv[c], "-prior")){
+    }
+    else if(!strcmp(argv[c], "-prior")) {
       c++;
       prior = argv[c];
-    } else {
+    }
+    else {
       filename = argv[c];
       break;
     }
     c++;
   }
-  if (filename.length()==0){
+  if(filename.length() == 0) {
     cerr << "Error: you have to provide an input filename" << endl;
     return 0;
-  } else {
+  }
+  else {
     cerr << "reading from file " << filename << endl;
   }
 
-  StaticTransformTree * _transforms = 0;
-  if (transforms_filename.length()){
+  StaticTransformTree* _transforms = 0;
+  if(transforms_filename.length()) {
     _transforms = new StaticTransformTree;
     _transforms->load(transforms_filename);
   }
   
-  
   std::vector<MessageSeqSynchronizer> synchronizers(depth_topics.size());
-  if (rgb_topics.size()>0){
-    if (rgb_topics.size()!=depth_topics.size()){
+  if(rgb_topics.size() > 0) {
+    if(rgb_topics.size() != depth_topics.size()) {
       cerr << "fatal error the number of RGB topics should be the same as the -t topics" << endl;
       return 0;
     }
-    for (size_t i=0; i<depth_topics.size(); i++){
+    for(size_t i = 0; i < depth_topics.size(); i++) {
       std::vector<string> depth_plus_rgb_topic;
       depth_plus_rgb_topic.push_back(depth_topics[i]);
       depth_plus_rgb_topic.push_back(rgb_topics[i]);
       synchronizers[i].setTopics(depth_plus_rgb_topic);
     }
-  } else {
-    for (size_t i=0; i<depth_topics.size(); i++){
+  }
+  else {
+    for(size_t i = 0; i < depth_topics.size(); i++) {
       std::vector<string> depth_topic;
       depth_topic.push_back(depth_topics[i]);
       synchronizers[i].setTopics(depth_topic);
@@ -219,14 +238,15 @@ int main(int argc, char **argv) {
   }
 
   cerr << "constructing tracker ... ";
-  if (depth_topics.size() < 2 || single) {
+  if(depth_topics.size() < 2 || single) {
     tracker = Tracker::makeTracker(alignerType, config);
-  } else {
+  }
+  else {
     MultiTracker* multi_tracker = MultiTracker::makeTracker(alignerType, config);
     multi_tracker->init(depth_topics);
     tracker = multi_tracker;
   }
-  if (! tracker) {
+  if(!tracker) {
     cerr << "unknown tracker type [" << alignerType << "] aborting" << endl;
     return 0;
   }
@@ -236,14 +256,14 @@ int main(int argc, char **argv) {
   tracker->setMaxDistance(max_distance);
   tracker->setMinDistance(min_distance);
 
-  ProjectiveAligner* projective_aligner=dynamic_cast<ProjectiveAligner*>(&tracker->aligner());
-  if (projective_aligner){
+  ProjectiveAligner* projective_aligner = dynamic_cast<ProjectiveAligner*>(&tracker->aligner());
+  if(projective_aligner) {
     projective_aligner->setReferenceCanvasScale(canvas_scale);
     cerr << "Setting canvas scale to: " << projective_aligner->referenceCanvasScale() << endl;
   }
 
   Cloud prior_cloud;
-  if (prior.length()>0){
+  if(prior.length() > 0) {
     cerr << "Loading prior from file [" << prior << "]" << endl;
     cerr << "tracker set in localization mode" << endl;
     tracker->enableMerging(false);
@@ -254,7 +274,6 @@ int main(int argc, char **argv) {
   
   cerr << " Done" << endl;
 
-
   // new VerboseTrigger(tracker, Tracker::TRACK_BROKEN, 0, "TRACK BROKEN!!!");
 
   //new VerboseTrigger(tracker, Tracker::PROCESSING_DONE, 0, 
@@ -264,12 +283,12 @@ int main(int argc, char **argv) {
 
   cerr << "ALL IN PLACE" << endl;
 
-  app=new QApplication(argc, argv);
+  app = new QApplication(argc, argv);
 
   TrackerViewer* viewer = new TrackerViewer(tracker);
   viewer->show();
   
-  if (show_intermediate_frames) {
+  if(show_intermediate_frames) {
     ShowIntermediateCloudTrigger* intermediate_shower=new ShowIntermediateCloudTrigger(viewer, &tracker->aligner());
   }
   int cloud_count = 0;
@@ -283,48 +302,53 @@ int main(int argc, char **argv) {
   int snap_count = 0;
   MessageWriter writer;
   writer.open("corrected_poses.txt");
-  bool show_changes=0;
-  while (reader.good()) {
-    if (running) {
+  bool show_changes = 0;
+  while(reader.good()) {
+    if(running) {
       BaseMessage* msg = reader.readMessage();
-      if (! msg)
+      if(!msg) {
 	continue;
-      BaseImageMessage* base_img=dynamic_cast<BaseImageMessage*>(msg);
-      if (! base_img)
+      }
+      BaseImageMessage* base_img = dynamic_cast<BaseImageMessage*>(msg);
+      if(!base_img) {
 	continue;
-            Matrix6f odom_info;
+      }
+      Matrix6f odom_info;
       odom_info.setIdentity();
-      if (! base_img->hasOdom()){
+      if(!base_img->hasOdom()) {
 	odom_info.setZero();
       } 
     
-
-      if (_transforms) 
+      if(_transforms) { 
 	_transforms->applyTransform(*base_img);
-
-      if(cam_only)
+      }
+      
+      if(cam_only) {
 	base_img->setOffset(Eigen::Isometry3f::Identity());
-      if(cam_only)
+      }
+      if(cam_only) {
 	base_img->setOdometry(Eigen::Isometry3f::Identity());
+      }
 
-
-      BaseImageMessage* base_depth_img=0, *base_rgb_img=0;
+      BaseImageMessage* base_depth_img = 0, *base_rgb_img = 0;
       size_t i;
-      for (i=0; i<synchronizers.size(); i++){
+      for(i = 0; i < synchronizers.size(); i++) {
 	synchronizers[i].putMessage(base_img);
-	if (synchronizers[i].messagesReady()) {
+	if(synchronizers[i].messagesReady()) {
 	  base_depth_img=dynamic_cast<BaseImageMessage*>(synchronizers[i].messages()[0].get());
-	  if (synchronizers[i].messages().size()>1)
+	  if(synchronizers[i].messages().size() > 1) {
 	    base_rgb_img=dynamic_cast<BaseImageMessage*>(synchronizers[i].messages()[1].get());
+	  }
 	  break;
 	}
       }
-      if (! base_depth_img)
+      if(!base_depth_img) {
 	continue;
+      }
       RGBImage rgb_image;
-      if (base_rgb_img)
+      if(base_rgb_img) {
 	rgb_image =base_rgb_img->image();
-      
+      }      
       
       PinholeImageMessage* pinhole_depth_img=dynamic_cast<PinholeImageMessage*>(base_depth_img);
       PinholeImageMessage* pinhole_rgb_img=dynamic_cast<PinholeImageMessage*>(base_rgb_img);
@@ -332,7 +356,7 @@ int main(int argc, char **argv) {
       SphericalImageMessage* spherical_depth_img=dynamic_cast<SphericalImageMessage*>(base_depth_img);
       SphericalImageMessage* spherical_rgb_img=dynamic_cast<SphericalImageMessage*>(base_rgb_img);
 
-      if (pinhole_depth_img){
+      if(pinhole_depth_img) {
 	tracker->processFrame(pinhole_depth_img->image(),
 			      rgb_image, 
 			      pinhole_depth_img->cameraMatrix(),
@@ -346,7 +370,7 @@ int main(int argc, char **argv) {
 			      odom_info);
       } 
 
-      if (spherical_depth_img){
+      if(spherical_depth_img) {
 	tracker->processSphericalFrame(spherical_depth_img->image(),
 				       rgb_image, 
 				       spherical_depth_img->cameraMatrix(),
@@ -363,31 +387,31 @@ int main(int argc, char **argv) {
       } 
 
       std::cerr << "T: " << t2v(tracker->globalT()).transpose() << std::endl;
-      if (tracker->isTrackBroken()){
+      if(tracker->isTrackBroken()) {
 	saveCloud(output_filename,cloud_count);
 	tracker->clearStatus();
       }
       viewer->updateGL();
       app->processEvents();
       synchronizers[i].reset();
-
-      if (save_snapshot) {
-	if (! snap_stream ) {
+      
+      if(save_snapshot) {
+	if(!snap_stream) {
 	  snap_stream.open("images.txt");
 	}
 	char snap_filename[100];
-	sprintf(snap_filename,"image-%07d.jpg", snap_count);
+	sprintf(snap_filename, "image-%07d.jpg", snap_count);
 	snap_stream << snap_filename << endl;
 	viewer->saveSnapshot(QString(snap_filename));
-	snap_count ++;
+	snap_count++;
       }
-
-    } else {
+    }
+    else {
       app->processEvents();
       usleep(20000);
     }
-    QKeyEvent* event=viewer->lastKeyEvent();
-    if (event){
+    QKeyEvent* event = viewer->lastKeyEvent();
+    if(event) {
       switch(event->key()) {
       case Qt::Key_W: 
 	saveCloud(output_filename,cloud_count);
@@ -399,11 +423,11 @@ int main(int argc, char **argv) {
 	viewer->setFollowCamera(!viewer->followCamera());
 	break;
      case Qt::Key_D:
-       save_snapshot = ! save_snapshot;
+       save_snapshot = !save_snapshot;
        cerr << "snapshot now is " << save_snapshot << endl;
-	break;
+       break;
       case Qt::Key_P: 
-	running = ! running;
+	running = !running;
 	break;
       case Qt::Key_B: 
 	reader = MessageReader();
@@ -414,13 +438,15 @@ int main(int argc, char **argv) {
 	tracker->enableMerging(!tracker->mergingEnabled());
 	break;
       case Qt::Key_J: 
-	show_changes=!show_changes;
-	if (show_changes) {
+	show_changes = !show_changes;
+	if(show_changes) {
 	  tracker->setChangesThreshold(0.05);
-	} else {
+	}
+	else {
 	  tracker->setChangesThreshold(0);
 	}
-      default:;
+      default:
+	break;
       }
       viewer->keyEventProcessed();
     }
@@ -428,4 +454,6 @@ int main(int argc, char **argv) {
   saveCloud(output_filename,cloud_count);
   writer.close();
   app->exec();
+
+  return 0;
 }
