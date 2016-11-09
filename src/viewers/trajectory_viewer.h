@@ -9,11 +9,14 @@ namespace nicp {
   class TrajectoryViewer: public nicp::SimpleViewer {
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
+    
+    virtual void draw();
+    virtual void drawWithNames();
+
+    virtual void keyPressEvent(QKeyEvent *e);
 
     MapNodeList nodes;
     BinaryNodeRelationSet relations;
-    virtual void draw();
-    virtual void drawWithNames();
 
   protected:
     std::map<int, MapNode*> _names_map;

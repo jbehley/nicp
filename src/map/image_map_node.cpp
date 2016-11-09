@@ -39,10 +39,17 @@ namespace nicp {
       return;
     if (name>-1)
       glPushName(name);
+
+    glPushMatrix();
+    nicp::glMultMatrix(_transform);
+    glScalef(0.1, 0.1, 0.1);
+    nicp::drawReferenceSystem();    
+    glPopMatrix();
+    
     glPushMatrix();
     Eigen::Isometry3f cameraPose = _transform*_camera_info->offset();
     nicp::glMultMatrix(cameraPose);
-    nicp::drawPyramidWireframe(/*float pyrH = */0.02, /*float pyrW = */0.01);
+    nicp::drawPyramidWireframe(0.02, 0.01);
     glPopMatrix();
     if (name>-1)
       glPopName();

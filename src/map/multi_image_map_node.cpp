@@ -49,7 +49,6 @@ namespace nicp {
     if (name>-1)
       glPushName(name);
 
-    // Ask to Giorgio
     glPushMatrix();
     nicp::glMultMatrix(_transform);
     glScalef(0.1, 0.1, 0.1);
@@ -63,7 +62,7 @@ namespace nicp {
       glPushMatrix();
       nicp::glMultMatrix(_camera_info->cameraInfos()[i]->offset());
       glColor3f(0.56f, 0.0f, 1.0f);
-      nicp::drawPyramidWireframe(/*float pyrH = */0.05, /*float pyrW = */0.025);
+      nicp::drawPyramidWireframe(0.05, 0.025);
       glPopMatrix();
     }
     glPopMatrix();

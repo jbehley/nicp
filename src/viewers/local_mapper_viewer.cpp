@@ -23,7 +23,6 @@ namespace nicp{
     if (!_tracker->currentModel() || !_tracker->referenceModel() )
       return;
 
-    glPushAttrib(GL_COLOR);
     glPushMatrix();
     glMultMatrix( _tracker->globalT() );
 
@@ -32,10 +31,10 @@ namespace nicp{
     drawReferenceSystem();
     glPopMatrix();
 
-   /// draw the current after applying the epsilon T from aligner
+    // draw the current after applying the epsilon T from aligner
     glPushMatrix();
     glMultMatrix(_tracker->aligner().T().inverse() );
-    if (_tracker->currentModel()){
+    if(_tracker->currentModel()) {
       glColor3f(0.3, 0.3, 0.8);
       _tracker->currentModel()->draw();
     }
@@ -43,28 +42,34 @@ namespace nicp{
 
     glPushMatrix();
     glMultMatrix(_tracker->lastCamera()->offset());
-    float pyrH = 0.1;
-    float pyrW = 0.05;
-    drawPyramidWireframe(/*pyrH = */ 0.1, /*pyrW = */ 0.05);
+    drawPyramidWireframe(0.1, 0.05);
     glPopMatrix();
 
-    /// draw the reference
-    if (_tracker->referenceModel()){
+    // draw the reference
+    if(_tracker->referenceModel()) {
       glColor3f(0.5, 0.5, 0.5);
       _tracker->referenceModel()->draw();
     }
- 
     glPopMatrix();
-    glPopAttrib();
+            
+    if(_local_map_trajectory) {
+      for(MapNodeList::iterator it = _local_map_trajectory->begin(); it != _local_map_trajectory->end(); it++) {
+    	(*it)->draw();
+      }
+    }
+
+    for(BinaryNodeRelationSet::iterator it = relations.begin(); it != relations.end(); ++it) {
+      // BinaryNodeRelation* rel = dynamic_cast<BinaryNodeRelation*>(*it);
+      // if(rel) {
+      // 	LocalMap* from = dynamic_cast<LocalMap*>(rel->from());
+      // 	LocalMap* to = dynamic_cast<LocalMap*>(rel->to());      
+      // 	if(from && to) { 
+      // 	  std::cerr << "Ecchela" << std::endl;
+      // 	}
+      // }
+    }
     
     TrajectoryViewer::draw();
-
-    glPushAttrib(GL_COLOR);
-    if (_local_map_trajectory) {
-      for (MapNodeList::iterator it = _local_map_trajectory->begin(); it!=_local_map_trajectory->end(); it++) 
-	(*it)->draw();
-    }
-    glPopAttrib();
   }
 
 }

@@ -15,6 +15,7 @@ namespace nicp {
     TrackerViewer(Tracker* _tracker);
 
     virtual void draw();
+
     inline bool followCamera() const {return _follow_camera;}
     inline void setFollowCamera(bool follow_camera) { _follow_camera = follow_camera;}
 

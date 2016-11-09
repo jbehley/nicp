@@ -38,19 +38,30 @@ int main(int argc, char** argv) {
   des.setFilePath(argv[1]);
   Serializable* o;
   MapNodeList lmaps;
+  BinaryNodeRelationSet rels;
   while((o = des.readObject()) ){
     LocalMap* lmap = dynamic_cast<LocalMap*>(o);
     if(lmap) {
       lmaps.addElement(lmap);
     }
+    BinaryNodeRelation* rel = dynamic_cast<BinaryNodeRelation*>(o);
+    if(rel) {
+      LocalMap* from = dynamic_cast<LocalMap*>(rel->from());
+      LocalMap* to = dynamic_cast<LocalMap*>(rel->to());      
+      if(from && to) { 
+	rels.insert(std::tr1::shared_ptr<BinaryNodeRelation>(rel));
+      }
+    }
     objects.push_back(o);
   }
   cerr << "Read: " << objects.size() << " elements" << endl;
   cerr << "Read: " << lmaps.size() << " local maps" << endl;
+  cerr << "Read: " << rels.size() << " binary relations" << endl;
 
   QApplication app(argc, argv);
   TrajectoryViewer viewer;
   viewer.nodes = lmaps;
+  viewer.relations = rels;
   viewer.show();
   app.exec();
 

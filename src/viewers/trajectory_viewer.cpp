@@ -26,7 +26,7 @@ namespace nicp {
       n->draw(attrs);
       k++;
     }
-    nodes.draw();
+    
     for(BinaryNodeRelationSet::iterator it = relations.begin(); it != relations.end(); ++it) {
       if(!(*it)->parent()) {
 	(*it)->draw();
@@ -45,6 +45,20 @@ namespace nicp {
     }
   }
 
+  void TrajectoryViewer::keyPressEvent(QKeyEvent *e) {
+    SimpleViewer::keyPressEvent(e);    
+    if((e->key() == Qt::Key_C)) {
+      _selected_objects.clear();
+      update(); // Refresh display
+    }
+    else if((e->key() == Qt::Key_V)) {
+      for(MapNodeList::iterator it = nodes.begin(); it != nodes.end(); it++) {
+	_selected_objects.insert(it->get());
+      }
+      update(); // Refresh display
+    }
+  }
+  
   void TrajectoryViewer::postSelection(const QPoint&) {
     int id = selectedName();
     if(id < 0) {

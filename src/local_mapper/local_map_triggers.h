@@ -60,8 +60,8 @@ namespace nicp {
     inline MapNodeList* localMaps() { return _local_maps; }
     inline void setLocalMaps(MapNodeList* local_maps) { _local_maps = local_maps; }
 
-    inline BinaryNodeRelationSet* localMapsRelations() { return _relations; }
-    inline void setLocalMapsRelations(BinaryNodeRelationSet* relations) { _relations = relations; }
+    inline BinaryNodeRelationSet* localMapsRelations() { return _local_maps_relations; }
+    inline void setLocalMapsRelations(BinaryNodeRelationSet* local_maps_relations) { _local_maps_relations = local_maps_relations; }
 
 
     // max size of the bounding box of the trajectory translation, after which a new local map is created
@@ -90,7 +90,7 @@ namespace nicp {
     float _trajectory_max_orientation;
     float _clipping_distance;
     MapNodeList* _local_maps;
-    //BinaryNodeRelationSet* _relations;
+    BinaryNodeRelationSet* _local_maps_relations;
   };
 
 }

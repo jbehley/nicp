@@ -46,7 +46,6 @@ namespace nicp {
 	_last_global_pose = _tracker->globalT();
 	BinaryNodeRelation* rel=0;
 	if (_relations && previous_node) {
-	  
 	  rel = new BinaryNodeRelation;
 	  rel->setFrom(previous_node);
 	  rel->setTo(new_node);
@@ -76,7 +75,7 @@ namespace nicp {
     _trajectory_max_orientation = 1;
     _serializer = ser;
     _local_maps = 0;
-    _relations = 0;
+    _local_maps_relations = 0;
     _nodes = new MapNodeList;
     _relations = new BinaryNodeRelationSet;
   }
@@ -123,8 +122,10 @@ namespace nicp {
 	  _serializer->writeObject(*rel);
 
 	_last_relation = rel;
-	if (_relations)
+	if (_relations) {
 	  _relations->insert(rel);
+	  _local_maps_relations->insert(rel);
+	}
       }
       
       std::tr1::shared_ptr<LocalMap> current_map_ptr(lmap);
