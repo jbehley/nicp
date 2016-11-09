@@ -49,6 +49,7 @@ namespace nicp {
     glPushMatrix();
     Eigen::Isometry3f cameraPose = _transform*_camera_info->offset();
     nicp::glMultMatrix(cameraPose);
+    glColor3f(0.56f, 0.0f, 1.0f);
     nicp::drawPyramidWireframe(0.02, 0.01);
     glPopMatrix();
     if (name>-1)
