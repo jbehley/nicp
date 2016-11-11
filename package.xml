@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <package>
-  <name>nicp_suite</name>
-  <version>2.0.0</version>
-  <description>The nicp_suite package</description>
+  <name>mapping</name>
+  <version>1.0.0</version>
+  <description>The mapping package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="serafin@dis.uniroma1.it">Jacopo Serafin</maintainer>
   <maintainer email="grisetti@dis.uniroma1.it">Giorgio Grisetti</maintainer>
+  <maintainer email="serafin@dis.uniroma1.it">Jacopo Serafin</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
@@ -27,9 +27,10 @@
   <!-- Authors do not have to be maintianers, but could be -->
   <!-- Example: -->
   <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
-  <author email="serafin@dis.uniroma1.it">Jacopo Serafin</author>
   <author email="grisetti@dis.uniroma1.it">Giorgio Grisetti</author>
+  <author email="serafin@dis.uniroma1.it">Jacopo Serafin</author>
 
+  
   <!-- The *_depend tags are used to specify dependencies -->
   <!-- Dependencies can be catkin packages or system dependencies -->
   <!-- Examples: -->
@@ -42,23 +43,19 @@
   <!-- Use test_depend for packages you need only for testing: -->
   <!--   <test_depend>gtest</test_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>g2o_catkin</build_depend>
-  <!-- <build_depend>cv_bridge</build_depend> -->
-  <!-- <build_depend>image_transport</build_depend> -->
-  <!-- <build_depend>thin_state_publisher</build_depend> -->
-  <!-- <build_depend>sensor_msgs</build_depend> -->
-  <!-- <build_depend>tf</build_depend> -->
-  <!-- <build_depend>message_generation</build_depend> -->
-  <!-- <build_depend>thin_msgs</build_depend> -->
 
+  <build_depend>boss</build_depend>
+  <build_depend>thin_msgs</build_depend>
+  <build_depend>thin_state_publisher</build_depend>
+  <build_depend>gl_helpers</build_depend>
+  <build_depend>g2o_catkin</build_depend>
+  
   <run_depend>message_runtime</run_depend>
+  <run_depend>boss</run_depend>
+  <run_depend>thin_msgs</run_depend>
+  <run_depend>thin_state_publisher</run_depend>
+  <run_depend>gl_helpers</run_depend>
   <run_depend>g2o_catkin</run_depend>
-  <!-- <run_depend>cv_bridge</run_depend> -->
-  <!-- <run_depend>image_transport</run_depend> -->
-  <!-- <run_depend>thin_state_publisher</run_depend> -->
-  <!-- <run_depend>sensor_msgs</run_depend> -->
-  <!-- <run_depend>tf</run_depend> -->
-  <!-- <run_depend>thin_msgs</run_depend> -->
 
 
   <!-- The export tag contains other, unspecified, tags -->

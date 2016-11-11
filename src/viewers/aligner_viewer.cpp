@@ -3,7 +3,9 @@
 #include "aligner_viewer.h"
 
 namespace nicp {
+
   using namespace std;
+  using namespace map_core;
   
   AlignerViewer::AlignerViewer(BaseAligner* aligner, float voxelResolution) : CloudViewer() {
     _voxelResolution = voxelResolution;

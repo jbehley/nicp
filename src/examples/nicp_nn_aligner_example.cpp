@@ -1,9 +1,10 @@
 #include <fstream>
 
-#include "core/nn_aligner.h"
-#include "globals/system_utils.h"
+#include "nicp/nn_aligner.h"
+#include <globals/system_utils.h>
 
 using namespace std;
+using namespace map_core;
 using namespace nicp;
 
 const char* banner[] = {
@@ -15,7 +16,7 @@ const char* banner[] = {
 
 int main(int argc, char** argv) {
   if(argc < 4) {
-    nicp::printBanner(banner);
+    system_utils::printBanner(banner);
     return 0;
   }
 

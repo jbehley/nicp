@@ -2,15 +2,18 @@
 
 #include <qevent.h>
 
-#include "globals/opengl_primitives.h"
-#include "globals/draw_attributes.h"
+#include <gl_helpers/opengl_primitives.h>
+#include <gl_helpers/draw_attributes.h>
 
 #include "cloud_viewer.h"
 
 namespace nicp {
+  
   using namespace std;
   using namespace Eigen;
-
+  using namespace gl_helpers;
+  using namespace map_core;
+  
   CloudViewer::CloudViewer() {
     _mode = MoveCamera;
     _is_orthographic = false;
@@ -27,7 +30,6 @@ namespace nicp {
   void CloudViewer::draw(){
     for (CloudIsometryMap::iterator it = _clouds.begin(); it!=_clouds.end(); it++) {
       const Cloud* cloud = it->first;
-      // glPointSize(3);
       if (_selected_objects.count(cloud)) {
 	glColor3f(0.8, 0.8, 0.2);
       } else {

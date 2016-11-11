@@ -1,11 +1,17 @@
 #include <iostream>
-#include "map/image_map_node.h"
-#include "map/multi_image_map_node.h"
+#include "map_core/image_map_node.h"
+#include "map_core/multi_image_map_node.h"
 #include "local_map_triggers.h"
-#include "tracker/multi_tracker.h"
+#include "map_tracker/multi_tracker.h"
 
-namespace nicp {
+namespace local_mapper {
 
+  using namespace std;
+  using namespace boss;
+  using namespace map_core;
+  using namespace nicp;
+  using namespace map_tracker;
+  
   TrajectoryMakerTrigger::TrajectoryMakerTrigger(Tracker* tracker,
 						 int events,
 						 int priorory):

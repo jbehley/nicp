@@ -14,13 +14,15 @@
 #include <qevent.h>
 #include <qglviewer.h>
 
-#include "core/depth_utils.h"
-#include "core/projective_aligner.h"
-#include "globals/system_utils.h"
+#include "nicp/depth_utils.h"
+#include "nicp/projective_aligner.h"
+#include <globals/system_utils.h>
 #include "viewers/aligner_viewer.h"
 
 using namespace std;
 using namespace Eigen;
+using namespace system_utils;
+using namespace map_core;
 using namespace nicp;
 
 const char* banner[] = {

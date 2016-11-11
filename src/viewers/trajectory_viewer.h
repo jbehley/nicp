@@ -1,12 +1,12 @@
 #pragma once
 
-#include "globals/simple_viewer.h"
-#include "map/map_node_list.h"
-#include "map/binary_node_relation.h"
+#include <gl_helpers/simple_viewer.h>
+#include "map_core/map_node_list.h"
+#include "map_core/binary_node_relation.h"
 
 namespace nicp {
 
-  class TrajectoryViewer: public nicp::SimpleViewer {
+  class TrajectoryViewer: public gl_helpers::SimpleViewer {
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
     
@@ -15,13 +15,13 @@ namespace nicp {
 
     virtual void keyPressEvent(QKeyEvent *e);
 
-    MapNodeList nodes;
-    BinaryNodeRelationSet relations;
+    map_core::MapNodeList nodes;
+    map_core::BinaryNodeRelationSet relations;
 
   protected:
-    std::map<int, MapNode*> _names_map;
+    std::map<int, map_core::MapNode*> _names_map;
     virtual void postSelection(const QPoint& point);
-    std::set<MapNode*> _selected_objects;
+    std::set<map_core::MapNode*> _selected_objects;
 
   };
  

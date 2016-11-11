@@ -10,9 +10,10 @@
 
 #include "g2o_bridge.h"
 
-namespace nicp {
+namespace global_optimization {
 
   using namespace std;
+  using namespace map_core;
 
   G2OBridge::G2OBridge() {
     graph = g2oInit();
@@ -35,7 +36,7 @@ namespace nicp {
   }
 
   void G2OBridge::psToG2o(BinaryNodeRelationSet& relations,
-			    MapNodeList& local_maps){
+			  MapNodeList& local_maps){
     graph->clear();
     _nodes_g2o_ps_map.clear();
     _edges_g2o_ps_map.clear();

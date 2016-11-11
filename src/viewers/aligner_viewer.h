@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/base_aligner.h"
+#include "nicp/base_aligner.h"
 #include "viewers/cloud_viewer.h"
 
 namespace nicp {

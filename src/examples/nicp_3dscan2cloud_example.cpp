@@ -1,12 +1,15 @@
 #include <sstream>
 #include <fstream>
 
-#include "core/depth_utils.h"
-#include "core/spherical_camera_info.h"
-#include "core/spherical_projector.h"
-#include "globals/system_utils.h"
+#include "nicp/depth_utils.h"
+#include "map_core/spherical_camera_info.h"
+#include "nicp/spherical_projector.h"
+#include <globals/system_utils.h>
 
 using namespace std;
+using namespace system_utils;
+using namespace boss;
+using namespace map_core;
 using namespace nicp;
 
 void loadRawCloud (Vector3fVector& points, istream& is) {
@@ -75,7 +78,7 @@ const char* banner[] = {
 
 int main(int argc, char** argv) {
   if(argc < 3) {
-    nicp::printBanner(banner);
+    system_utils::printBanner(banner);
     return 0;
   }
 

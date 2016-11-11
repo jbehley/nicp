@@ -1,24 +1,25 @@
 #pragma once
-#include "map/local_map.h"
-#include "map/binary_node_relation.h"
-#include "boss/serializer.h"
-#include "tracker/tracker.h"
 
-namespace nicp {
+#include "map_core/local_map.h"
+#include "map_core/binary_node_relation.h"
+#include <boss/serializer.h>
+#include "map_tracker/tracker.h"
 
-  class TrajectoryMakerTrigger: public Tracker::Trigger{
+namespace local_mapper {
+
+  class TrajectoryMakerTrigger: public map_tracker::Tracker::Trigger{
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
-    TrajectoryMakerTrigger(Tracker* tracker,
+    TrajectoryMakerTrigger(map_tracker::Tracker* tracker,
 			   int events = 
-			   Tracker::TRACK_GOOD|
-			   Tracker::REFERENCE_FRAME_RESET|
-			   Tracker::NEW_CAMERA_ADDED,
+			   map_tracker::Tracker::TRACK_GOOD|
+			   map_tracker::Tracker::REFERENCE_FRAME_RESET|
+			   map_tracker::Tracker::NEW_CAMERA_ADDED,
 			   int priorory = 10);
-    virtual void action(Tracker::TriggerEvent e);
-    MapNodeList* nodes() {return _nodes;}
-    BinaryNodeRelationSet* relations() { return _relations;}
-    void setNodes(MapNodeList* nodes_) {_nodes = nodes_;}
+    virtual void action(map_tracker::Tracker::TriggerEvent e);
+    map_core::MapNodeList* nodes() {return _nodes;}
+    map_core::BinaryNodeRelationSet* relations() { return _relations;}
+    void setNodes(map_core::MapNodeList* nodes_) {_nodes = nodes_;}
 
     // min translation between two trajectory nodes
     inline float trajectoryMinTranslation()  const { return _trajectory_min_translation; }
@@ -27,12 +28,12 @@ namespace nicp {
     // min orientation between two trajectory nodes
     inline float trajectoryMinOrientation()  const { return _trajectory_min_orientation; }
     inline void setTrajectoryMinOrientation(float v)  { _trajectory_min_orientation = v; }
-    virtual void onNewNodeCreated(MapNode* node, BinaryNodeRelation* rel=0);
-    virtual void onCameraInfoCreated(BaseCameraInfo* camera_info);
+    virtual void onNewNodeCreated(map_core::MapNode* node, map_core::BinaryNodeRelation* rel=0);
+    virtual void onCameraInfoCreated(map_core::BaseCameraInfo* camera_info);
   protected:
     Eigen::Isometry3f _last_global_pose;
-    MapNodeList* _nodes;
-    BinaryNodeRelationSet* _relations;
+    map_core::MapNodeList* _nodes;
+    map_core::BinaryNodeRelationSet* _relations;
     float _trajectory_min_translation;
     float _trajectory_min_orientation;
   };
@@ -40,28 +41,28 @@ namespace nicp {
 
   class LocalMapTrigger: public TrajectoryMakerTrigger {
   public:
-    LocalMapTrigger(Tracker* tracker,
+    LocalMapTrigger(map_tracker::Tracker* tracker,
 		    int events = 
-		    Tracker::TRACK_GOOD|
-		    Tracker::TRACK_BROKEN|
-		    Tracker::REFERENCE_FRAME_RESET|
-		    Tracker::TRACKING_DONE|
-		    Tracker::NEW_CAMERA_ADDED,
+		    map_tracker::Tracker::TRACK_GOOD|
+		    map_tracker::Tracker::TRACK_BROKEN|
+		    map_tracker::Tracker::REFERENCE_FRAME_RESET|
+		    map_tracker::Tracker::TRACKING_DONE|
+		    map_tracker::Tracker::NEW_CAMERA_ADDED,
 		    int priorory = 10,
-		    Serializer* ser=0);
-    virtual void action(Tracker::TriggerEvent e);
-    virtual void onLocalMapCreated(LocalMap* lmap);
-    virtual void onRelationCreated(BinaryNodeRelation* rel);
+		    boss::Serializer* ser=0);
+    virtual void action(map_tracker::Tracker::TriggerEvent e);
+    virtual void onLocalMapCreated(map_core::LocalMap* lmap);
+    virtual void onRelationCreated(map_core::BinaryNodeRelation* rel);
 
     
-    inline Serializer* serializer() const {return _serializer;}
-    inline void setSerializer(Serializer* ser) {_serializer = ser;}
+    inline boss::Serializer* serializer() const {return _serializer;}
+    inline void setSerializer(boss::Serializer* ser) {_serializer = ser;}
 
-    inline MapNodeList* localMaps() { return _local_maps; }
-    inline void setLocalMaps(MapNodeList* local_maps) { _local_maps = local_maps; }
+    inline map_core::MapNodeList* localMaps() { return _local_maps; }
+    inline void setLocalMaps(map_core::MapNodeList* local_maps) { _local_maps = local_maps; }
 
-    inline BinaryNodeRelationSet* localMapsRelations() { return _local_maps_relations; }
-    inline void setLocalMapsRelations(BinaryNodeRelationSet* local_maps_relations) { _local_maps_relations = local_maps_relations; }
+    inline map_core::BinaryNodeRelationSet* localMapsRelations() { return _local_maps_relations; }
+    inline void setLocalMapsRelations(map_core::BinaryNodeRelationSet* local_maps_relations) { _local_maps_relations = local_maps_relations; }
 
 
     // max size of the bounding box of the trajectory translation, after which a new local map is created
@@ -78,19 +79,19 @@ namespace nicp {
     bool isTrajectoryBoundReached();
 
   protected:
-    LocalMap* makeLocalMap();
-    void saveLocalMap(LocalMap& lmap);
-    void saveCameras(CameraInfoManager& manager);
+    map_core::LocalMap* makeLocalMap();
+    void saveLocalMap(map_core::LocalMap& lmap);
+    void saveCameras(nicp::CameraInfoManager& manager);
 
-    std::tr1::shared_ptr<LocalMap> _last_local_map, _previous_local_map;
-    std::tr1::shared_ptr<BinaryNodeRelation> _last_relation;
+    std::tr1::shared_ptr<map_core::LocalMap> _last_local_map, _previous_local_map;
+    std::tr1::shared_ptr<map_core::BinaryNodeRelation> _last_relation;
     bool _enable;
-    Serializer* _serializer;
+    boss::Serializer* _serializer;
     float _trajectory_max_translation;
     float _trajectory_max_orientation;
     float _clipping_distance;
-    MapNodeList* _local_maps;
-    BinaryNodeRelationSet* _local_maps_relations;
+    map_core::MapNodeList* _local_maps;
+    map_core::BinaryNodeRelationSet* _local_maps_relations;
   };
 
 }

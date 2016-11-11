@@ -5,7 +5,7 @@
 
 #include "local_mapper/local_map_triggers.h"
 
-#include "tracker/tracker.h"
+#include "map_tracker/tracker.h"
 #include "trajectory_viewer.h"
 
 namespace nicp {
@@ -14,15 +14,15 @@ namespace nicp {
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 
-    LocalMapperViewer(LocalMapTrigger* _trigger);
+    LocalMapperViewer(local_mapper::LocalMapTrigger* _trigger);
 
     virtual void draw();
 
   protected:
-    Tracker* _tracker;
-    LocalMapTrigger* _trigger;
+    map_tracker::Tracker* _tracker;
+    local_mapper::LocalMapTrigger* _trigger;
     bool _modelTainted;
-    MapNodeList* _local_map_trajectory;
+    map_core::MapNodeList* _local_map_trajectory;
 
   };
   

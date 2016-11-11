@@ -2,14 +2,17 @@
 
 #include <qevent.h>
 
-#include "globals/opengl_primitives.h"
+#include <gl_helpers/opengl_primitives.h>
 
 #include "tracker_viewer.h"
 
 namespace nicp {
+
   using namespace std;
   using namespace Eigen;
- 
+  using namespace gl_helpers;
+  using namespace map_tracker;
+  
   TrackerViewer::TrackerViewer(Tracker* t) {
     _tracker = t;
     _modelTainted = true;

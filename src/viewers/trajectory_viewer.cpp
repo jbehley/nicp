@@ -2,13 +2,15 @@
 
 #include <qevent.h>
 
-#include "globals/opengl_primitives.h"
+#include <gl_helpers/opengl_primitives.h>
 
 #include "trajectory_viewer.h"
 
 namespace nicp {
+
   using namespace std;
   using namespace Eigen;
+  using namespace map_core;
   
   void TrajectoryViewer::draw() {
     int k = 0;

@@ -3,16 +3,16 @@
 #include <qapplication.h>
 #include <qglviewer.h>
 
-#include "tracker/tracker.h"
-#include "globals/simple_viewer.h"
+#include "map_tracker/tracker.h"
+#include <gl_helpers/simple_viewer.h>
 
 namespace nicp {
 
-  class TrackerViewer : public SimpleViewer {
+  class TrackerViewer : public gl_helpers::SimpleViewer {
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 
-    TrackerViewer(Tracker* _tracker);
+    TrackerViewer(map_tracker::Tracker* _tracker);
 
     virtual void draw();
 
@@ -20,7 +20,7 @@ namespace nicp {
     inline void setFollowCamera(bool follow_camera) { _follow_camera = follow_camera;}
 
   protected:
-    Tracker* _tracker;
+    map_tracker::Tracker* _tracker;
     bool _modelTainted;
     bool _follow_camera;
     
