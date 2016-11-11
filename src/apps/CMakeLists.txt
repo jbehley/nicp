@@ -145,3 +145,32 @@ target_link_libraries(nicp_local_mapper_gui_app
   ${Boost_SYSTEM_LIBRARY}
   ${catkin_LIBRARIES}
 )
+
+add_executable(nicp_refiner_gui_app nicp_refiner_gui_app.cpp)
+target_link_libraries(nicp_refiner_gui_app
+  nicp_global_optimization
+  nicp_viewers
+  nicp_tracker
+  nicp_map
+  nicp_core 
+  nicp_boss
+  nicp_globals
+  ${FLANN_LIBRARIES}
+  ${QGLVIEWER_LIBRARY} 
+  ${QT_QTXML_LIBRARY} 
+  ${QT_QTOPENGL_LIBRARY} 
+  ${QT_QTGUI_LIBRARY} 
+  ${QT_QTCORE_LIBRARY} 
+  ${OPENGL_gl_LIBRARY} 
+  ${OPENGL_glu_LIBRARY}
+  ${ZLIB_LIBRARIES} 
+  ${OpenCV_LIBS}
+  ${Boost_FILESYSTEM_LIBRARY} 
+  ${Boost_SYSTEM_LIBRARY}
+  ${G2O_OPENGL_HELPER_LIBRARY}
+  ${G2O_SOLVER_CSPARSE_EXTENSION}
+  ${G2O_TYPES_SLAM3D} 
+  ${G2O_CORE_LIBRARY} 
+  ${G2O_STUFF_LIBRARY} 
+  ${CSPARSE_LIBRARY}
+)	

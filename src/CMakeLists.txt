@@ -9,15 +9,10 @@ add_subdirectory(examples)
 add_subdirectory(viewers)
 add_subdirectory(apps)
 
-# add_subdirectory(tracker_viewers)
-# add_subdirectory(tracker_examples)
-# add_subdirectory(map_viewers)
-# add_subdirectory(local_mapper_viewers)
-# add_subdirectory(local_mapper_examples)
 # add_subdirectory(ros_bridge)
 
 # the one below requires g2o
-# add_subdirectory(global_optimization)
+add_subdirectory(global_optimization)
 # add_subdirectory(calibration)
 # add_subdirectory(playground)
 # add_subdirectory(loop_closer)

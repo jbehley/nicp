@@ -7,6 +7,7 @@ set(ENABLE_ROS_NODES true)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  g2o_catkin
   # cv_bridge
   # image_transport
   # sensor_msgs
@@ -59,6 +60,10 @@ include_directories(${FLANN_INCLUDE_DIR})
 # Find ZLib
 find_package(ZLIB REQUIRED)
 include_directories(${ZLIB_INCLUDE_DIRS})
+
+# Find SuiteSparse
+find_package(SuiteSparse REQUIRED)
+include_directories(${CSPARSE_INCLUDE_DIR})
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -144,22 +149,12 @@ catkin_package(
   src
   nicp_boss
   nicp_globals
-  nicp_core			
-  # txt_io_library
-  # fps_tracker_library
-  # fps_extrinsic_calibrator_library	
-  # fps_map_library
-  # fps_local_mapper_library
-  # fps_ros_library
-  # fps_ros_viewers_library
-  # fps_global_optimization_library
-  # fps_loop_closer2_library
-  # fps_loop_closer_library
-  # fps_core_viewers_library
-  # fps_tracker_viewers_library
-  # fps_map_viewers_library
-  # fps_local_mapper_viewers_library
-  # ros_wrappers_library
+  nicp_core
+  nicp_tracker
+  nicp_map
+  nicp_local_mapper
+  nicp_global_optimization
+  nicp_viewers
 
   CATKIN_DEPENDS message_runtime 
 #  CATKIN_DEPENDS cv_bridge image_transport sensor_msgs tf
