@@ -18,13 +18,14 @@
 #include "nicp/projective_aligner.h"
 #include "nicp/spherical_projector.h"
 #include <globals/system_utils.h>
-#include "viewers/aligner_viewer.h"
+#include "map_viewers/aligner_viewer.h"
 
 using namespace std;
 using namespace Eigen;
 using namespace system_utils;
 using namespace map_core;
 using namespace nicp;
+using namespace map_viewers;
 
 const char* banner[] = {
   "nicp_spherical_aligner_gui_app",

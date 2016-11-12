@@ -1,7 +1,7 @@
 #include <iostream>
 #include "map_core/image_map_node.h"
 #include "map_core/multi_image_map_node.h"
-#include "local_map_triggers.h"
+#include "local_mapper.h"
 #include "map_tracker/multi_tracker.h"
 
 namespace local_mapper {
@@ -69,14 +69,14 @@ namespace local_mapper {
   
   void TrajectoryMakerTrigger::onNewNodeCreated(MapNode*, BinaryNodeRelation*){}
 
-  void LocalMapTrigger::onRelationCreated(BinaryNodeRelation* ){}
+  void LocalMapper::onRelationCreated(BinaryNodeRelation* ){}
 
-  LocalMapTrigger::LocalMapTrigger(Tracker* tracker,
-				   int events,
-				   int priorory,
-				   Serializer* ser) :
+  LocalMapper::LocalMapper(Tracker* tracker,
+			   int events,
+			   int priorory,
+			   Serializer* ser) :
     TrajectoryMakerTrigger(tracker, events, priorory) {
-    cerr<< " name: LocalMapTrigger "<< endl;
+    cerr<< " name: LocalMapper "<< endl;
     _trajectory_max_translation = 0.25;
     _trajectory_max_orientation = 1;
     _serializer = ser;
@@ -85,7 +85,8 @@ namespace local_mapper {
     _nodes = new MapNodeList;
     _relations = new BinaryNodeRelationSet;
   }
-  void LocalMapTrigger::action(Tracker::TriggerEvent e) {
+  
+  void LocalMapper::action(Tracker::TriggerEvent e) {
     TrajectoryMakerTrigger::action(e);
     if (e&Tracker::REFERENCE_FRAME_RESET)
       return;
@@ -150,7 +151,7 @@ namespace local_mapper {
     }
   }
 
-  LocalMap* LocalMapTrigger::makeLocalMap() {
+  LocalMap* LocalMapper::makeLocalMap() {
     if (! _nodes)
       return 0;
     if (! _tracker->referenceModel() || ! _tracker->referenceModel()->size())
@@ -176,7 +177,7 @@ namespace local_mapper {
     return local_map;
   }
 
-  void LocalMapTrigger::saveLocalMap(LocalMap& lmap){
+  void LocalMapper::saveLocalMap(LocalMap& lmap){
     for (MapNodeList::iterator tt = lmap.nodes().begin();
 	 tt!=lmap.nodes().end(); tt++){
       MapNode* n = tt->get();
@@ -194,19 +195,18 @@ namespace local_mapper {
 
   }
 
-  void LocalMapTrigger::onLocalMapCreated(LocalMap* lmap){
+  void LocalMapper::onLocalMapCreated(LocalMap* lmap){
     cerr << "Local Map created" << endl;
   }
 
-  void LocalMapTrigger::saveCameras(CameraInfoManager& manager) {
+  void LocalMapper::saveCameras(CameraInfoManager& manager) {
     for(size_t i = 0; i< manager.cameras().size(); i++) {
       BaseCameraInfo* cam = manager.cameras()[i];
       _serializer->writeObject(*cam);
     }
   }
 
-
-  bool LocalMapTrigger::isTrajectoryBoundReached() {
+  bool LocalMapper::isTrajectoryBoundReached() {
     if (!_nodes || !_nodes->size())
       return false;
     Eigen::Vector3f tbb = _nodes->upperTranslation() - _nodes->lowerTranslation();

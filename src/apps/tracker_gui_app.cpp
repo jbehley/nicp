@@ -24,7 +24,7 @@
 #include <txt_io/message_seq_synchronizer.h>
 #include "map_tracker/base_triggers.h"
 #include "map_tracker/multi_tracker.h"
-#include "viewers/tracker_viewer.h"
+#include "map_viewers/tracker_viewer.h"
 
 using namespace std;
 using namespace Eigen;
@@ -33,6 +33,7 @@ using namespace system_utils;
 using namespace map_core;
 using namespace nicp;
 using namespace map_tracker;
+using namespace map_viewers;
 
 Tracker* tracker = 0;
 QApplication* app;

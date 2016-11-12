@@ -5,7 +5,7 @@
 #include "map_core/cloud.h"
 #include <gl_helpers/simple_viewer.h>
 
-namespace nicp {
+namespace map_viewers {
 
   class CloudViewer : public gl_helpers::SimpleViewer {
   public:

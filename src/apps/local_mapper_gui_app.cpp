@@ -18,11 +18,11 @@
 #include <txt_io/pinhole_image_message.h>
 #include <txt_io/static_transform_tree.h>
 #include <txt_io/message_seq_synchronizer.h>
-#include "local_mapper/local_map_triggers.h"
+#include "local_mapper/local_mapper.h"
 #include "map_tracker/base_triggers.h"
 #include "map_tracker/multi_tracker.h"
 #include "map_tracker/tracker.h"
-#include "viewers/local_mapper_viewer.h"
+#include "map_viewers/local_mapper_viewer.h"
 
 using namespace std;
 using namespace Eigen;
@@ -31,6 +31,7 @@ using namespace txt_io;
 using namespace nicp;
 using namespace map_tracker;
 using namespace local_mapper;
+using namespace map_viewers;
 
 Tracker* tracker = 0;
 
@@ -248,16 +249,16 @@ int main(int argc, char** argv) {
     ser->setBinaryPath(output_filename + ".d/<classname>.<nameAttribute>.<id>.<ext>");
   }
   
-  LocalMapTrigger* local_map_maker = new LocalMapTrigger(tracker, 
-							 Tracker::TRACK_GOOD|
-							 Tracker::TRACK_BROKEN|
-							 Tracker::REFERENCE_FRAME_RESET|
-							 Tracker::TRACKING_DONE,
-							 1, ser);
-
-  local_map_maker->setTrajectoryMaxTranslation(tbb);
-  local_map_maker->setTrajectoryMaxOrientation(obb);
-  local_map_maker->setClippingDistance(clipping_distance);
+  LocalMapper* local_mapper_maker = new LocalMapper(tracker, 
+						    Tracker::TRACK_GOOD|
+						    Tracker::TRACK_BROKEN|
+						    Tracker::REFERENCE_FRAME_RESET|
+						    Tracker::TRACKING_DONE,
+						    1, ser);
+  
+  local_mapper_maker->setTrajectoryMaxTranslation(tbb);
+  local_mapper_maker->setTrajectoryMaxOrientation(obb);
+  local_mapper_maker->setClippingDistance(clipping_distance);
   //new ClearStatusTrigger(tracker, Tracker::TRACK_BROKEN, 2);
 
   new VerboseTrigger(tracker, Tracker::PROCESSING_DONE, 0, 
@@ -268,9 +269,9 @@ int main(int argc, char** argv) {
   QApplication* app = 0; 
   LocalMapperViewer* viewer = 0;
   app = new QApplication(argc, argv);
-  viewer = new LocalMapperViewer(local_map_maker);
-  local_map_maker->setLocalMaps(&viewer->nodes);
-  local_map_maker->setLocalMapsRelations(&viewer->relations);
+  viewer = new LocalMapperViewer(local_mapper_maker);
+  local_mapper_maker->setLocalMaps(&viewer->nodes);
+  local_mapper_maker->setLocalMapsRelations(&viewer->relations);
   viewer->show();
   
   MessageReader reader;

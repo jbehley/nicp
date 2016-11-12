@@ -1,5 +1,5 @@
 add_library(local_mapper_library SHARED
-  local_map_triggers.cpp local_map_triggers.h
+  local_mapper.cpp local_mapper.h
 )
 target_link_libraries(local_mapper_library 
   map_core_library

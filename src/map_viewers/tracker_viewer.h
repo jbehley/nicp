@@ -6,7 +6,7 @@
 #include "map_tracker/tracker.h"
 #include <gl_helpers/simple_viewer.h>
 
-namespace nicp {
+namespace map_viewers {
 
   class TrackerViewer : public gl_helpers::SimpleViewer {
   public:

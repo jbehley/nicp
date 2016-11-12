@@ -10,7 +10,7 @@ namespace g2o {
   class EdgeSE3;
 }
 
-namespace global_optimization {
+namespace map_global_optimization {
 
   class G2OBridge {
   public:

@@ -6,7 +6,7 @@
 
 #include "tracker_viewer.h"
 
-namespace nicp {
+namespace map_viewers {
 
   using namespace std;
   using namespace Eigen;

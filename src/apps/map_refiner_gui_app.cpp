@@ -10,18 +10,19 @@
 
 #include "map_core/cloud.h"
 #include "nicp/nn_aligner.h"
-#include "global_optimization/g2o_bridge.h"
+#include "map_global_optimization/g2o_bridge.h"
 #include <globals/system_utils.h>
 #include "map_core/image_map_node.h"
 #include "map_core/local_map.h"
-#include "viewers/trajectory_viewer.h"
+#include "map_viewers/trajectory_viewer.h"
 
 using namespace std;
 using namespace boss;
 using namespace system_utils;
 using namespace map_core;
-using namespace global_optimization;
+using namespace map_global_optimization;
 using namespace nicp;
+using namespace map_viewers;
 
 // Help objects to force linking 
 BaseCameraInfo cinfo;

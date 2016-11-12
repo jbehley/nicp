@@ -7,7 +7,7 @@
 
 #include "cloud_viewer.h"
 
-namespace nicp {
+namespace map_viewers {
   
   using namespace std;
   using namespace Eigen;
@@ -36,7 +36,7 @@ namespace nicp {
 	glColor3f(0.2, 0.4, 0.4);
       }
       glPushMatrix();
-      nicp::glMultMatrix(it->second);
+      glMultMatrix(it->second);
       cloud->draw();
       glPopMatrix();
     }
@@ -48,7 +48,7 @@ namespace nicp {
     for (CloudIsometryMap::iterator it = _clouds.begin(); it!=_clouds.end(); it++) {
       const Cloud* cloud = it->first;
       glPushMatrix();
-      nicp::glMultMatrix(it->second);
+      glMultMatrix(it->second);
       cloud->draw(name);
       glPopMatrix();
       _names_map.insert(make_pair(name, cloud));

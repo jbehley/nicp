@@ -10,7 +10,7 @@
 
 #include "g2o_bridge.h"
 
-namespace global_optimization {
+namespace map_global_optimization {
 
   using namespace std;
   using namespace map_core;

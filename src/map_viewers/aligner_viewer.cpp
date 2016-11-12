@@ -2,10 +2,11 @@
 
 #include "aligner_viewer.h"
 
-namespace nicp {
+namespace map_viewers {
 
   using namespace std;
   using namespace map_core;
+  using namespace nicp;
   
   AlignerViewer::AlignerViewer(BaseAligner* aligner, float voxelResolution) : CloudViewer() {
     _voxelResolution = voxelResolution;

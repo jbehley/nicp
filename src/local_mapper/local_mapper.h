@@ -39,17 +39,17 @@ namespace local_mapper {
   };
 
 
-  class LocalMapTrigger: public TrajectoryMakerTrigger {
+  class LocalMapper: public TrajectoryMakerTrigger {
   public:
-    LocalMapTrigger(map_tracker::Tracker* tracker,
-		    int events = 
-		    map_tracker::Tracker::TRACK_GOOD|
-		    map_tracker::Tracker::TRACK_BROKEN|
-		    map_tracker::Tracker::REFERENCE_FRAME_RESET|
-		    map_tracker::Tracker::TRACKING_DONE|
-		    map_tracker::Tracker::NEW_CAMERA_ADDED,
-		    int priorory = 10,
-		    boss::Serializer* ser=0);
+    LocalMapper(map_tracker::Tracker* tracker,
+		int events = 
+		map_tracker::Tracker::TRACK_GOOD|
+		map_tracker::Tracker::TRACK_BROKEN|
+		map_tracker::Tracker::REFERENCE_FRAME_RESET|
+		map_tracker::Tracker::TRACKING_DONE|
+		map_tracker::Tracker::NEW_CAMERA_ADDED,
+		int priorory = 10,
+		boss::Serializer* ser=0);
     virtual void action(map_tracker::Tracker::TriggerEvent e);
     virtual void onLocalMapCreated(map_core::LocalMap* lmap);
     virtual void onRelationCreated(map_core::BinaryNodeRelation* rel);

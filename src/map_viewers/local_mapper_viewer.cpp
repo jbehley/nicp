@@ -6,7 +6,7 @@
 
 #include "local_mapper_viewer.h"
 
-namespace nicp{
+namespace map_viewers{
 
   using namespace std;
   using namespace Eigen;
@@ -14,13 +14,13 @@ namespace nicp{
   using namespace map_core;
   using namespace local_mapper;
   
-  LocalMapperViewer::LocalMapperViewer(LocalMapTrigger* t) {
-    _trigger = t;
+  LocalMapperViewer::LocalMapperViewer(LocalMapper* t) {
+    _local_mapper = t;
     _tracker = t->tracker();
-    _trigger->setLocalMaps(&nodes);
-    _trigger->setLocalMapsRelations(&relations);
+    _local_mapper->setLocalMaps(&nodes);
+    _local_mapper->setLocalMapsRelations(&relations);
     _modelTainted = true;
-    _local_map_trajectory = _trigger->nodes();
+    _local_map_trajectory = _local_mapper->nodes();
   }
   
   void LocalMapperViewer::draw(){

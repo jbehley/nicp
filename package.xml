@@ -49,6 +49,7 @@
   <build_depend>thin_state_publisher</build_depend>
   <build_depend>gl_helpers</build_depend>
   <build_depend>g2o_catkin</build_depend>
+  <build_depend>sensor_msgs</build_depend>
   
   <run_depend>message_runtime</run_depend>
   <run_depend>boss</run_depend>
@@ -56,6 +57,7 @@
   <run_depend>thin_state_publisher</run_depend>
   <run_depend>gl_helpers</run_depend>
   <run_depend>g2o_catkin</run_depend>
+  <run_depend>sensor_msgs</run_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->

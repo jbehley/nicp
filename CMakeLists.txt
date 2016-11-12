@@ -15,7 +15,8 @@ find_package(catkin REQUIRED COMPONENTS
   thin_msgs
   thin_state_publisher
   gl_helpers
-  g2o_catkin  
+  g2o_catkin
+  sensor_msgs
 )
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
@@ -109,29 +110,30 @@ include_directories(${CSPARSE_INCLUDE_DIR})
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 #Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   RichPointMsg.msg
-#   CloudMsg.msg
-#   StampedCloudMsg.msg
-#   TrajectoryNodeMsg.msg
-#   MapNodeMsg.msg
-#   LocalMapMsg.msg
-#   BaseCameraInfoMsg.msg
-#   PinholeCameraInfoMsg.msg
-#   MultiCameraInfoMsg.msg
-#   ImageMapNodeMsg.msg
-#   MultiImageMapNodeMsg.msg
-#   BinaryNodeRelationMsg.msg
-#   MapNodeUpdateMsg.msg
-#   MapUpdateMsg.msg
-# )
+add_message_files(
+  FILES
+  RichPointMsg.msg
+  CloudMsg.msg
+  StampedCloudMsg.msg
+  TrajectoryNodeMsg.msg
+  MapNodeMsg.msg
+  LocalMapMsg.msg
+  BaseCameraInfoMsg.msg
+  PinholeCameraInfoMsg.msg
+  MultiCameraInfoMsg.msg
+  ImageMapNodeMsg.msg
+  MultiImageMapNodeMsg.msg
+  BinaryNodeRelationMsg.msg
+  MapNodeUpdateMsg.msg
+  MapUpdateMsg.msg
+)
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#    FILES
-#    IdsSrv.srv  LocalMapByIdSrv.srv
-# )
+add_service_files(
+  FILES
+  IdsSrv.srv
+  LocalMapByIdSrv.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -141,10 +143,10 @@ include_directories(${CSPARSE_INCLUDE_DIR})
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   sensor_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  sensor_msgs
+)
 
 
 ###################################
@@ -159,7 +161,7 @@ include_directories(${CSPARSE_INCLUDE_DIR})
 catkin_package(
   INCLUDE_DIRS src
   LIBRARIES map_core_library nicp_library map_tracker_library
-  global_optimization_library local_mapper_library
+  map_global_optimization_library local_mapper_library
   map_viewers_library
   CATKIN_DEPENDS boss thin_msgs thin_state_publisher gl_helpers g2o_catkin  
 #  DEPENDS system_lib

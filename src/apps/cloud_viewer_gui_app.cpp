@@ -15,13 +15,14 @@
 
 #include "nicp/depth_utils.h"
 #include <globals/system_utils.h>
-#include "viewers/cloud_viewer.h"
+#include "map_viewers/cloud_viewer.h"
 
 using namespace std;
 using namespace Eigen;
 using namespace system_utils;
 using namespace map_core;
 using namespace nicp;
+using namespace map_viewers;
 
 const char* banner[] = {
   "cloud_viewer_gui_app",

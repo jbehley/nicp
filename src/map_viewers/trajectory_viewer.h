@@ -4,7 +4,7 @@
 #include "map_core/map_node_list.h"
 #include "map_core/binary_node_relation.h"
 
-namespace nicp {
+namespace map_viewers {
 
   class TrajectoryViewer: public gl_helpers::SimpleViewer {
   public:

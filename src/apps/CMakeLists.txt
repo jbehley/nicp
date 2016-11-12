@@ -136,7 +136,7 @@ target_link_libraries(local_mapper_gui_app
 add_executable(map_refiner_gui_app map_refiner_gui_app.cpp)
 target_link_libraries(map_refiner_gui_app
   map_core_library
-  global_optimization_library
+  map_global_optimization_library
   nicp_library
   map_viewers_library
   ${QGLVIEWER_LIBRARY} 
