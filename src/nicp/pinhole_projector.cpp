@@ -2,7 +2,9 @@
 #include "map_core/pinhole_camera_info.h"
 #include <stdexcept>
 
+#ifdef _GO_PARALLEL_
 #include <omp.h>
+#endif
 
 namespace nicp {
 
@@ -40,14 +42,30 @@ namespace nicp {
     setIncidenceAngle(0.5* M_PI);
 
     _max_image_size = 0;
+#ifdef _GO_PARALLEL_
     _num_threads = omp_get_max_threads();
     _zbuffers.resize(_num_threads);
     _indicess.resize(_num_threads);
     _zbuffers_buf.resize(_num_threads);
     _indicess_buf.resize(_num_threads);
+    cerr << "parallel projector initialized with " << _num_threads << " threads" << endl;
+#else //_GO_PARALLEL_
+    _num_threads = 1;
+    _max_image_size = 0;
+    cerr << "sequential projector initialized" << endl;
+#endif //_GO_PARALLEL_
     _information_criterion=InverseDepth;
   }
 
+#ifndef _GO_PARALLEL_
+  void PinholeProjector::project(FloatImage& zbuffer, IndexImage& indices,
+			    const Eigen::Isometry3f& T,
+			    const Cloud& model) const {
+    _project(zbuffer, indices, _inverse_offset*T, model, 0, model.size());
+    return;
+  }
+
+#else //_GO_PARALLEL_
   void PinholeProjector::project(FloatImage& zbuffer, IndexImage& indices,
 			    const Eigen::Isometry3f& T,
 			    const Cloud& model) const {
@@ -101,6 +119,8 @@ namespace nicp {
       }
     }
   }
+
+#endif // _GO_PARALLEL_
 
   void PinholeProjector::setCameraInfo(BaseCameraInfo* camera_info) {
     if (! camera_info) {

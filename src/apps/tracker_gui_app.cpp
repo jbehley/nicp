@@ -54,7 +54,7 @@ const char* banner[] = {
   "  -single        [flag] if set uses the single projector, otherwise it uses the multi projector on all topics",
   "  -tf            [string] if set overrides the transforms in the file with theones of the file provided",
   "  -bpr:          [float] bad points ratio [float], default: 0.1",
-  "  -damping:      [float] solver damping, default: 100",
+  "  -damping:      [float] solver damping, default: 0",
   "  -shrink :      [int]   image downscaling (2 means half size), default: 1",
   "  -prior :       [string] cloud to load as prior", 
   "  -canvas_scale: [float] extends the frustum of the camera to capture larger offsets, default: 1.5",
@@ -118,7 +118,7 @@ int main(int argc, char** argv) {
   std::vector<std::string> rgb_topics;
 
   float bad_points_ratio = 0.1;
-  float damping = 100;
+  float damping = 0;
   float tbb = 5;
   float obb = 1;
   int shrink = 1;
@@ -143,7 +143,7 @@ int main(int argc, char** argv) {
     }
     else if(!strcmp(argv[c], "-cam_only")) {
       cam_only = true;
-      cerr << "CAM_ONLY" << endl;
+      cerr << "cam_only" << endl;
     }
     else if (!strcmp(argv[c], "-single")) {
       single = true;

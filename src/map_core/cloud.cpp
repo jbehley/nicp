@@ -1,9 +1,14 @@
 #include "cloud.h"
 
+#ifdef _GO_PARALLEL_
 #include <omp.h>
+#endif
+
 #include <GL/gl.h>
 #include <string>
 #include <stdexcept>
+
+// #define _NAN_CHECK_
 
 namespace map_core {
 
@@ -15,7 +20,9 @@ namespace map_core {
       return;
     size_t k = size();
     resize(k + other.size());
+#ifdef _GO_PARALLEL_
 #pragma omp parallel for
+#endif
     for (size_t i = 0; i < other.size(); i++) {
       at(k + i) = other.at(i);
     }
@@ -56,7 +63,9 @@ namespace map_core {
 
   void Cloud::transformInPlace(const Eigen::Isometry3f& T) {
     Eigen::Matrix3f R = T.linear();
+#ifdef _GO_PARALLEL_
 #pragma omp parallel for
+#endif
     for (size_t i = 0; i < size(); i++) {
       if (at(i).accumulator() <= 0) {
 	cerr << "size: " << size() << endl;
@@ -74,20 +83,38 @@ namespace map_core {
   void Cloud::transform(Cloud& other, const Eigen::Isometry3f& T) const {
     other.resize(size());
     Eigen::Matrix3f R = T.linear();
+#ifdef _GO_PARALLEL_
 #pragma omp parallel for
+#endif
     for (size_t i = 0; i < size(); i++) {
       other[i] = at(i).transform(T);
     }
   }
 
+#ifdef _DEBUG_MERGE_
 
+#define checkCumVal(x,msg)						\
+  if (x.cumulativeValues[x##Idx]<=0){					\
+    cerr << "idx: " << x##Idx << endl;					\
+      cerr << "p:" << x.pointAccumulators[x##Idx].transpose() << endl;	\
+      cerr << "n:" << x.normalAccumulators[x##Idx].transpose() << endl; \
+      cerr << "c:" << x.cumulativeValues[x##Idx]<< endl;		\
+      throw std::runtime_error(msg);					\
+  }
+#else
 #define checkCumVal(x,msg)
+#endif
 
   void merge(FloatImage& destBuffer, IndexImage& destIndices, Cloud& dest,
 	     FloatImage& srcBuffer, IndexImage& srcIndices, Cloud& src,
 	     float normalThreshold,
 	     float distanceThreshold) {
 
+#ifdef _DEBUG_MERGE_
+    cerr << "Merge: " << endl;
+    cerr << "destSize: " << dest.size() << " srcSize: " << src.size() << endl;
+#endif //_DEBUG_MERGE_
+    
     normalThreshold = cos(normalThreshold);
     int newPoints = 0;
     for (int c = 0; c < destBuffer.cols; c++) {
@@ -148,6 +175,10 @@ namespace map_core {
       }
     }
 
+#ifdef _DEBUG_MERGE_
+    cerr << "dest expected final size: " << dest.size() + newPoints << endl;
+#endif //_DEBUG_MERGE_
+    
     // recompute all the touched points
     for (int c = 0; c < destBuffer.cols; c++) {
       for (int r = 0; r < destBuffer.rows; r++) {
@@ -169,6 +200,9 @@ namespace map_core {
 	k++;
       }
     }
+#ifdef _DEBUG_MERGE_
+    cerr << "expected size: " << dest.size() << " newPoints: " << newPoints << " finalSize: " << k << endl;
+#endif //_DEBUG_MERGE_
   }
 
   struct IndexTriplet {

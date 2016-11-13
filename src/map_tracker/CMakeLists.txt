@@ -1,6 +1,6 @@
 add_library(map_tracker_library SHARED
   base_triggers.cpp  base_triggers.h
-  call_tracker_trigger.h call_tracker_trigger.cpp
+  call_tracker_trigger.cpp call_tracker_trigger.h
   multi_tracker.cpp  multi_tracker.h
   tracker.cpp  tracker.h  
 )

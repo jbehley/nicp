@@ -14,7 +14,7 @@
   <!-- One license tag required, multiple allowed, one license per tag -->
   <!-- Commonly used license strings: -->
   <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
-  <license>BSD</license>
+  <license>GPLv3</license>
 
 
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
@@ -50,6 +50,8 @@
   <build_depend>gl_helpers</build_depend>
   <build_depend>g2o_catkin</build_depend>
   <build_depend>sensor_msgs</build_depend>
+  <build_depend>image_transport</build_depend>
+  <build_depend>cv_bridge</build_depend>
   
   <run_depend>message_runtime</run_depend>
   <run_depend>boss</run_depend>
@@ -58,7 +60,9 @@
   <run_depend>gl_helpers</run_depend>
   <run_depend>g2o_catkin</run_depend>
   <run_depend>sensor_msgs</run_depend>
-
+  <run_depend>image_transport</run_depend>
+  <run_depend>cv_bridge</run_depend>
+  
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

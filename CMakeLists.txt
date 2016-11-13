@@ -17,10 +17,13 @@ find_package(catkin REQUIRED COMPONENTS
   gl_helpers
   g2o_catkin
   sensor_msgs
+  image_transport
+  cv_bridge
 )
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 set(CMAKE_BUILD_TYPE Release)
+# add_definitions(-D_GO_PARALLEL_)
 
 message("PROCESSOR_TYPE: [${CMAKE_HOST_SYSTEM_PROCESSOR}]")
  #RASPBERRY PI 2 FLAGS

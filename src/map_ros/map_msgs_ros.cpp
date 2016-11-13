@@ -1,7 +1,7 @@
 #include "map_msgs_ros.h"
 #include <iostream>
 
-namespace fps_mapper {
+namespace map_ros {
 
   using namespace std;
   using namespace mapping;
@@ -146,16 +146,16 @@ namespace fps_mapper {
     node->setTransform(pose2eigen(msg.transform));
     node->setTimestamp(msg.timestamp);
     /*
-    for(size_t i = 0; i< msg.parents.size(); i++){
+      for(size_t i = 0; i< msg.parents.size(); i++){
       boss::Identifiable* o=context->getById(msg.parents[i]);
       if (! o ) {
-	throw std::runtime_error("invalid object instantiated");
+      throw std::runtime_error("invalid object instantiated");
       }
       MapNode* n=dynamic_cast<MapNode*>(o);
       if (! n)
-	throw std::runtime_error("wrong object type");
+      throw std::runtime_error("wrong object type");
       node->parents().insert(n);
-    }
+      }
     */
     return node;
   }
@@ -198,16 +198,16 @@ namespace fps_mapper {
     } 
     node->setTransform(pose2eigen(msg.transform));
     /*
-    for(size_t i = 0; i< msg.parents.size(); i++){
+      for(size_t i = 0; i< msg.parents.size(); i++){
       boss::Identifiable* o=context->getById(msg.parents[i]);
       if (! o ) {
-	throw std::runtime_error("invalid object instantiated");
+      throw std::runtime_error("invalid object instantiated");
       }
       MapNode* n=dynamic_cast<MapNode*>(o);
       if (! n)
-	throw std::runtime_error("wrong object type");
+      throw std::runtime_error("wrong object type");
       node->parents().insert(n);
-    }
+      }
     */
     o = context->getById(msg.camera_info);
     if (! o)
@@ -266,16 +266,16 @@ namespace fps_mapper {
       
     node->setTransform(pose2eigen(msg.transform));
     /*
-    for(size_t i = 0; i< msg.parents.size(); i++){
+      for(size_t i = 0; i< msg.parents.size(); i++){
       boss::Identifiable* o=context->getById(msg.parents[i]);
       if (! o ) {
-	throw std::runtime_error("invalid object instantiated");
+      throw std::runtime_error("invalid object instantiated");
       }
       MapNode* n=dynamic_cast<MapNode*>(o);
       if (! n)
-	throw std::runtime_error("wrong object type");
+      throw std::runtime_error("wrong object type");
       node->parents().insert(n);
-    }
+      }
     */
     o = context->getById(msg.camera_info);
     if (! o)
@@ -288,7 +288,7 @@ namespace fps_mapper {
     node->setTimestamp(msg.timestamp);
     node->subimageSeqs().resize(msg.subimage_seqs.size());
     for(size_t i = 0; i< msg.subimage_seqs.size(); i++){
-     node->subimageSeqs()[i] = msg.subimage_seqs[i];
+      node->subimageSeqs()[i] = msg.subimage_seqs[i];
     }
     return node;
   }
@@ -346,16 +346,16 @@ namespace fps_mapper {
     }
     node->setTransform(pose2eigen(msg.transform));
     /*
-    for(size_t i = 0; i< msg.parents.size(); i++){
+      for(size_t i = 0; i< msg.parents.size(); i++){
       boss::Identifiable* o=context->getById(msg.parents[i]);
       if (! o ) {
-	throw std::runtime_error("invalid object instantiated");
+      throw std::runtime_error("invalid object instantiated");
       }
       MapNode* n=dynamic_cast<MapNode*>(o);
       if (! n)
-	throw std::runtime_error("wrong object type");
+      throw std::runtime_error("wrong object type");
       node->parents().insert(n);
-    }
+      }
     */
 
     std::list<MapNode*> nodes;
@@ -447,7 +447,7 @@ namespace fps_mapper {
       context->add(&src->cloudReference());
       // cerr<< "message construct, new id for cloud reference map: " << src->cloudReference().getId() << endl;
     } 
-      // cerr<< "message construct, cloud reference map already existing: " << src->cloudReference().getId() << endl;
+    // cerr<< "message construct, cloud reference map already existing: " << src->cloudReference().getId() << endl;
     msg.relations.resize(src->relations().size());
     k = 0;
     for (BinaryNodeRelationSet::iterator it=src->relations().begin(); it!=src->relations().end(); it++){

@@ -2,11 +2,14 @@
 #include <cassert>
 #include <stdexcept>
 
+#ifdef _GO_PARALLEL_
 #include <omp.h>
+#endif
 
 #include "solver.h"
 
 #define _FAST_MULT_
+// #define NAN_CHECK
 
 namespace nicp {
 
@@ -114,8 +117,11 @@ namespace nicp {
       numOmegas = _reference->size();
     }
 
+#ifdef _GO_PARALLEL_
 #pragma omp parallel for
-    for (size_t _i = 0; _i<numOmegas; _i++){
+#endif
+    
+   for (size_t _i = 0; _i<numOmegas; _i++){
       int idx = compactCompute ? updateList[_i] : _i;
       const Eigen::Vector3f& referencePoint = (*_reference)[idx].point();
       const Eigen::Vector3f& referenceNormal = (*_reference)[idx].normal();
@@ -162,9 +168,9 @@ namespace nicp {
 
 
   void Solver::linearize(Matrix6f& H,Vector6f& b, 
-				      float& error, 
-				      const BaseCorrespondenceFinder::CorrespondenceVector& correspondences,
-				      size_t imin, size_t imax){
+			 float& error, 
+			 const BaseCorrespondenceFinder::CorrespondenceVector& correspondences,
+			 size_t imin, size_t imax){
 
     H.setZero();
     b.setZero();
@@ -281,7 +287,7 @@ namespace nicp {
       }
 
   }
-  
+
   void Solver::linearize(const BaseCorrespondenceFinder::CorrespondenceVector& correspondences){
     if (_omega_tainted)
       computeOmegas();
@@ -289,19 +295,20 @@ namespace nicp {
     _b.setZero();
     _error = 0;
     size_t numPoints = correspondences.size();
+#ifdef _GO_PARALLEL_
     int numThreads = omp_get_max_threads();
     int pointsPerThread = numPoints / numThreads;
     Matrix6f tH[numThreads]; 
     Vector6f tb[numThreads]; 
     float terror[numThreads];
-
+    
 #pragma omp parallel num_threads(numThreads)
     {
-
+      
       int threadId = omp_get_thread_num();
       int imin = pointsPerThread * threadId;
       int imax = imin + pointsPerThread;
-
+      
       terror[threadId] = 0;
       linearize(tH[threadId],
 		tb[threadId],
@@ -312,9 +319,13 @@ namespace nicp {
       _b+=tb[threadId];
       _error+=terror[threadId];
     }
+    
+#else // _GO_PARALLEL_
+    linearize(_H,_b,_error,correspondences, 0,numPoints);
+    
+#endif // _GO_PARALLEL_
   }
-
-
+  
   Matrix6f  Solver::remapInformationMatrix(const Eigen::Isometry3f& T_) {
     SigmaPointVector sigma_points=_raw_sigma_points;
     // apply each sigma point to the current transform to propagate the perturbation
