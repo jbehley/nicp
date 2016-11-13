@@ -10,7 +10,3 @@ add_subdirectory(apps)
 add_subdirectory(map_ros)
 add_subdirectory(map_viewers_ros)
 add_subdirectory(nodes)
-
-# add_subdirectory(calibration)
-# add_subdirectory(playground)
-# add_subdirectory(loop_closer)
