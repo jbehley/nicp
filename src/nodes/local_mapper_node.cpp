@@ -61,7 +61,7 @@ ros::Publisher* frameSkipPublisher = NULL;
 ros::Publisher* queueSizePublisher = NULL;
 
 const char* banner[] = {
-  "local_mapper_gui_app: offline local mapper working on dump files written with fps_message_dumper_node",
+  "local_mapper_gui_app: offline local mapper working on dump files written with thin_message_dumper_node",
   "usage:",
   " local_mapper_gui_app [options]",
   " where: ",

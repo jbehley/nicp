@@ -274,15 +274,15 @@ public:
 
 
 const char* banner[] = {
-  "fps_refiner_node: does on line manual loop closure, and publishes the transforms that map the tracker maps into a local map",
+  "map_refiner_node: does on line manual loop closure, and publishes the transforms that map the tracker maps into a local map",
   "usage:",
-  " fps_refiner_node [options]",  
+  " map_refiner_node [options]",  
   " where: ",
   " -h          [], prints this help",
   " -o    [string], output filename where to write the refined graph",
   "once the gus starts",
   " 1: toggles/untoggles the current view (and saves a lot of bandwidth)",
-  " shift-left-click on a node: highlights the local map of the node",
+  " shift + left click on a node: highlights the local map of the node",
   " M: matches the local maps (if there are only two higlighted)",
   " A: accepts the most recent match (press any other key to discard)",
   " O: optimizes the network",
@@ -306,7 +306,7 @@ int main(int argc, char** argv) {
     c++;
   }
 
-  ros::init(argc, argv, "refiner");
+  ros::init(argc, argv, "map_refiner_node");
   ros::NodeHandle n;
   tf::TransformListener* listener = new tf::TransformListener(ros::Duration(60.0));
   tf::TransformBroadcaster* broadcaster = new tf::TransformBroadcaster;
