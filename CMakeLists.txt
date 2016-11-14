@@ -12,7 +12,6 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   boss
-  thin_msgs
   thin_state_publisher
   gl_helpers
   g2o_catkin
@@ -166,7 +165,7 @@ catkin_package(
   LIBRARIES map_core_library nicp_library map_tracker_library
   map_global_optimization_library local_mapper_library
   map_viewers_library
-  CATKIN_DEPENDS boss thin_msgs thin_state_publisher gl_helpers g2o_catkin  
+  CATKIN_DEPENDS boss thin_state_publisher gl_helpers g2o_catkin  
 #  DEPENDS system_lib
 )
 
