@@ -34,83 +34,85 @@ class SphericalPointProjector : virtual public PointProjector {
   inline float horizontalFov() const { return _horizontalFov; }
 
   /**
-     *  This method set the horizontal field of view to the one given in input.
-     *  @param horizontalFov_ is a float value used to update the angular field of view. 
-     *  @see horizontalFov()
-     */
+   *  This method set the horizontal field of view to the one given in input.
+   *  @param horizontalFov_ is a float value used to update the angular field of view.
+   *  @see horizontalFov()
+   */
   inline void setHorizontalFov(float horizontalFov_) {
     _horizontalFov = horizontalFov_;
     _updateParameters();
   }
 
   /**
-     *  This method returns the vertical field of view set to the spherical point projector.
-     *  @return the vertical field of view set to the spherical point projector. 
-     *  @see setVerticalFov()
-     */
+   *  This method returns the vertical field of view set to the spherical point projector.
+   *  @return the vertical field of view set to the spherical point projector.
+   *  @see setVerticalFov()
+   */
   inline float verticalFov() const { return _verticalFov; }
 
   /**
-     *  This method set the vertical field of view to the one given in input.
-     *  @param verticalFov_ is a float value used to update the angular field of view. 
-     *  @see verticalFov()
-     */
+   *  This method set the vertical field of view to the one given in input, i.e., from this angle the field
+   *  of view extends up and down by verticalFov.
+   *
+   *  @param verticalFov_ is the angle in radians of the center.
+   *  @see verticalFov()
+   */
   inline void setVerticalFov(float verticalFov_) {
     _verticalFov = verticalFov_;
     _updateParameters();
   }
 
   /**
-     *  This method returns the horizontal center set to the spherical point projector.
-     *  @return the horizontal center set to the spherical point projector. 
-     *  @see setHorizontalCenter()
-     */
+   *  This method returns the horizontal center set to the spherical point projector.
+   *  @return the horizontal center set to the spherical point projector.
+   *  @see setHorizontalCenter()
+   */
   inline float horizontalCenter() const { return _horizontalCenter; }
 
   /**
-     *  This method set the horizontal center to the one given in input.
-     *  @param horizontalCenter_ is a float value used to update the horizontal center. 
-     *  @see horizontalCenter()
-     */
+   *  This method set the horizontal center to the one given in input, i.e., from this angle the field
+   *  of view extends left and right by horizontalFov.
+   *
+   *  @param horizontalCenter_ is the angle in radians of the center.
+   *  @see horizontalCenter()
+   */
   inline void setHorizontalCenter(float horizontalCenter_) { _horizontalCenter = horizontalCenter_; }
 
   /**
-     *  This method returns the vertical center set to the spherical point projector.
-     *  @return the vertical center set to the spherical point projector. 
-     *  @see setVerticalCenter()
-     */
+   *  This method returns the vertical center set to the spherical point projector.
+   *  @return the vertical center set to the spherical point projector.
+   *  @see setVerticalCenter()
+   */
   inline float verticalCenter() const { return _verticalCenter; }
 
   /**
-     *  This method set the vertical center to the one given in input.
-     *  @param verticalCenter_ is a float value used to update the vertical center. 
-     *  @see verticalCenter()
-     */
+   *  This method set the vertical center to the one given in input.
+   *  @param verticalCenter_ is a float value used to update the vertical center.
+   *  @see verticalCenter()
+   */
   inline void setVerticalCenter(float verticalCenter_) { _verticalCenter = verticalCenter_; }
 
   /**
-     *  Virtual method that set the size (rows and columns) of the image where the points are projected.
-     *  @param imageRows_ is a constant int value used to update the number of rows. 
-     *  @param imageCols_ is a constant int value used to update the number of columns. 
-     *  @see imageRows()
-     *  @see imageCols()
-     */
+   *  Virtual method that set the size (rows and columns) of the image where the points are projected.
+   *  @param imageRows_ is a constant int value used to update the number of rows.
+   *  @param imageCols_ is a constant int value used to update the number of columns.
+   *  @see imageRows()
+   *  @see imageCols()
+   */
   virtual inline void setImageSize(const int imageRows_, const int imageCols_) {
     PointProjector::setImageSize(imageRows_, imageCols_);
 
     _imageRows = imageRows_;
     _imageCols = imageCols_;
-    _horizontalCenter = _imageCols / 2.0f;
-    _verticalCenter = _imageRows / 2.0f;
 
     _updateParameters();
   }
 
   /**
-     *  Virtual method that set the pose transform to the one given in input.
-     *  @param transform_ is a constant reference to the isometry used to update the pose transform. 
-     *  @see transform()
-     */
+   *  Virtual method that set the pose transform to the one given in input.
+   *  @param transform_ is a constant reference to the isometry used to update the pose transform.
+   *  @see transform()
+   */
   virtual inline void setTransform(const Eigen::Isometry3f &transform_) {
     _transform = transform_;
     _transform.matrix().row(3) << 0.0f, 0.0f, 0.0f, 1.0f;
@@ -261,11 +263,16 @@ class SphericalPointProjector : virtual public PointProjector {
     float theta = atan2(cp.x(), cp.z());
     d = sqrt(cp.x() * cp.x() + cp.z() * cp.z());
     float phi = atan2(cp.y(), d);
+
+    x = y = 0.0f;  // avoid uninitialized values.
+
+    if (fabs(theta - _horizontalCenter) > _horizontalFov) { return false; }
+    if (fabs(phi - _verticalCenter) > _verticalFov) { return false; }
     if (d > _maxDistance || d < _minDistance) { return false; }
-    if (fabs(theta) > _horizontalFov) { return false; }
-    if (fabs(phi) > _verticalFov) { return false; }
-    x = (int)(_horizontalResolution * theta + _horizontalCenter);
-    y = (int)(_verticalResolution * phi + _verticalCenter);
+
+    x = (int)(_horizontalResolution * (theta + _horizontalFov - _horizontalCenter));
+    y = (int)(_verticalResolution * (phi + _verticalFov - _verticalCenter));
+
     return true;
   }
 
@@ -281,26 +288,30 @@ class SphericalPointProjector : virtual public PointProjector {
      *  @see unProject() 
      */
   inline bool _unProject(Point &p, const int x_, const int y_, const float d) const {
-    if (d < _minDistance || d > _maxDistance)
-      return false;
-    float theta = _inverseHorizontalResolution * (x_ - _horizontalCenter);
-    float phi = _inverseVerticalResolution * (y_ - _verticalCenter);
-    if (fabs(theta) > _horizontalFov) { return false; }
-    if (fabs(phi) > _verticalFov) { return false; }
+    if (d < _minDistance || d > _maxDistance) return false;
+
+    float theta = _inverseHorizontalResolution * x_ - _horizontalFov + _horizontalCenter;
+    float phi = _inverseVerticalResolution * y_ - _verticalFov + _verticalCenter;
+
+    if (fabs(theta - _horizontalCenter) > _horizontalFov) { return false; }
+    if (fabs(phi - _verticalCenter) > _verticalFov) { return false; }
+
     float x = sin(theta) * d;
     float z = cos(theta) * d;
     float y = d * tanf(phi);
+
     p = _transform * Eigen::Vector3f(x, y, z);
+
     return true;
   }
 
   /**
-     *  Internal method that projects the size in pixels of a square regions around the point specified by the 
+     *  Internal method that projects the size in pixels of a square regions around the point specified by the
      *  the input values.
-     *  @param x_ is an input int value representing the raw of the input point in the depth image.  
+     *  @param x_ is an input int value representing the raw of the input point in the depth image.
      *  @param y_ is an input int value representing the column of the input point in the depth image.
-     *  @param d is an input value containing the depth value of the input point. 
-     *  @param worldRadius is an input parameter containing a float representing the radius of a sphere in the 3D euclidean 
+     *  @param d is an input value containing the depth value of the input point.
+     *  @param worldRadius is an input parameter containing a float representing the radius of a sphere in the 3D euclidean
      *  space used to determine the size of the square regions.
      *  @return an int value representing the size in pixels of the square region around the input point.
      *  @see projectIntervals()
@@ -309,13 +320,12 @@ class SphericalPointProjector : virtual public PointProjector {
     // Just to avoid compilation warnings
     if (x_ || y_) {}
     // Point in camera coordinates;
-    if (d > _maxDistance || d < _minDistance)
-      return cv::Vec2i(-1, -1);
+    if (d > _maxDistance || d < _minDistance) return cv::Vec2i(-1, -1);
     Eigen::Vector4f cp = Eigen::Vector4f(worldRadius, worldRadius, d, 1.0f);
     float theta = atan2(cp.x(), cp.z());
     float phi = atan2(cp.y(), d);
-    int x = (int)(_horizontalResolution * theta);
-    int y = (int)(_verticalResolution * phi);
+    int x = (int)(_horizontalResolution * (theta + _horizontalFov - _horizontalCenter));
+    int y = (int)(_verticalResolution * (phi + _verticalFov - _verticalCenter));
     return cv::Vec2i(x, y);
   }
 
