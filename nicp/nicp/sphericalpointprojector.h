@@ -258,7 +258,7 @@ namespace nicp {
    *  @see project()
    */
     inline bool _project(int &x, int &y, float &d, const Point &p) const {
-      // Point in camera coordinates;
+      // Point in camera coordinates => spherical coordinates with scaling of cos(phi)!
       Eigen::Vector4f cp = _iT * p;
       float theta = atan2(cp.x(), cp.z());
       d = sqrt(cp.x() * cp.x() + cp.z() * cp.z());
@@ -296,6 +296,7 @@ namespace nicp {
       if (fabs(theta - _horizontalCenter) > _horizontalFov) { return false; }
       if (fabs(phi - _verticalCenter) > _verticalFov) { return false; }
 
+      // note: account for scaling with cos(phi) and divide everything by cos(phi)!
       float x = sin(theta) * d;
       float z = cos(theta) * d;
       float y = d * tanf(phi);
@@ -321,11 +322,14 @@ namespace nicp {
       if (x_ || y_) {}
       // Point in camera coordinates;
       if (d > _maxDistance || d < _minDistance) return cv::Vec2i(-1, -1);
+
       Eigen::Vector4f cp = Eigen::Vector4f(worldRadius, worldRadius, d, 1.0f);
       float theta = atan2(cp.x(), cp.z());
       float phi = atan2(cp.y(), d);
-      int x = (int)(_horizontalResolution * (theta + _horizontalFov - _horizontalCenter));
-      int y = (int)(_verticalResolution * (phi + _verticalFov - _verticalCenter));
+
+      int x = (int)(_horizontalResolution * theta);
+      int y = (int)(_verticalResolution * phi);
+
       return cv::Vec2i(x, y);
     }
 
