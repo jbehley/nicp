@@ -2,6 +2,8 @@ BasedOnStyle: Google
 IndentWidth: 2
 Standard: Cpp03
 ColumnLimit: 0
+BreakBeforeBinaryOperators: None
 AllowShortBlocksOnASingleLine: true
 AllowShortFunctionsOnASingleLine: All
+NamespaceIndentation: All
 # NamespaceIndentation: 2
