@@ -97,6 +97,12 @@ class SphericalPointProjector : virtual public PointProjector {
      */
   virtual inline void setImageSize(const int imageRows_, const int imageCols_) {
     PointProjector::setImageSize(imageRows_, imageCols_);
+
+    _imageRows = imageRows_;
+    _imageCols = imageCols_;
+    _horizontalCenter = _imageCols / 2.0f;
+    _verticalCenter = _imageRows / 2.0f;
+
     _updateParameters();
   }
 
